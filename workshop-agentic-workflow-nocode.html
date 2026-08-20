@@ -2279,19 +2279,63 @@ ul.tight li b{color:var(--text)}
 
 </div>
 
+<!-- Progress Bar -->
+<div id="progress-bar" style="position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--primary));width:0%;z-index:9999;transition:width .3s"></div>
+
+<!-- Timer -->
+<div id="timer" style="position:fixed;top:24px;right:24px;background:rgba(19,24,41,.9);padding:8px 16px;border-radius:8px;font-family:'Inter',monospace;font-size:14px;color:var(--cyan);border:1px solid var(--border);z-index:9999;display:none">00:00</div>
+
 <!-- Navigation Controls -->
 <div class="nav-controls">
   <button id="prev" title="Previous (←)">‹</button>
   <div class="count"><span id="cur">1</span> / 32</div>
   <button id="next" title="Next (→)">›</button>
+  <button id="fullscreen" title="Fullscreen (F)" style="margin-left:8px">⛶</button>
 </div>
 
+<!-- Keyboard Shortcuts Help -->
+<div id="shortcuts-help" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(19,24,41,.98);padding:32px;border-radius:16px;border:1px solid var(--border);z-index:10000;display:none;max-width:500px;box-shadow:0 30px 60px rgba(0,0,0,.8)">
+  <div style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:16px">⌨️ Keyboard Shortcuts</div>
+  <div style="display:grid;grid-template-columns:auto 1fr;gap:12px 24px;font-size:14px">
+    <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">←</kbd><span style="color:var(--text-2)">Previous slide</span>
+    <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">→</kbd><span style="color:var(--text-2)">Next slide</span>
+    <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">F</kbd><span style="color:var(--text-2)">Toggle fullscreen</span>
+    <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">O</kbd><span style="color:var(--text-2)">Slide overview</span>
+    <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">T</kbd><span style="color:var(--text-2)">Toggle timer</span>
+    <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">R</kbd><span style="color:var(--text-2)">Reset timer</span>
+    <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">Home</kbd><span style="color:var(--text-2)">First slide</span>
+    <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">End</kbd><span style="color:var(--text-2)">Last slide</span>
+    <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">?</kbd><span style="color:var(--text-2)">Show this help</span>
+    <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">Esc</kbd><span style="color:var(--text-2)">Close overview/help</span>
+  </div>
+  <div style="margin-top:20px;text-align:center;font-size:12px;color:var(--text-muted)">Press <kbd style="background:var(--surface-2);padding:2px 8px;border-radius:4px;color:var(--cyan);font-family:monospace">?</kbd> or click outside to close</div>
+</div>
+
+<!-- Slide Overview -->
+<div id="slide-overview" style="position:fixed;inset:0;background:rgba(10,14,26,.98);z-index:10000;display:none;overflow-y:auto;padding:40px">
+  <div style="max-width:1400px;margin:0 auto">
+    <div style="font-size:24px;font-weight:700;color:var(--text);margin-bottom:24px;text-align:center">📑 Slide Overview · Click to jump</div>
+    <div id="overview-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
 <script>
 (function(){
   const slides = document.querySelectorAll('.slide');
   const total = slides.length;
   let cur = 0;
   const counter = document.getElementById('cur');
+  const progressBar = document.getElementById('progress-bar');
+  const timerEl = document.getElementById('timer');
+  const shortcutsHelp = document.getElementById('shortcuts-help');
+  const slideOverview = document.getElementById('slide-overview');
+  const overviewGrid = document.getElementById('overview-grid');
+
+  // Timer state
+  let timerInterval = null;
+  let timerSeconds = 0;
+  let timerRunning = false;
 
   function show(i){
     cur = Math.max(0, Math.min(total-1, i));
@@ -2299,13 +2343,122 @@ ul.tight li b{color:var(--text)}
       s.style.display = idx === cur ? 'block' : 'none';
     });
     counter.textContent = (cur + 1);
+    
+    // Update progress bar
+    const progress = ((cur + 1) / total) * 100;
+    progressBar.style.width = progress + '%';
+    
     window.scrollTo({ top: slides[cur].getBoundingClientRect().top + window.scrollY - 32, behavior: 'smooth' });
   }
 
+  // Timer functions
+  function toggleTimer() {
+    if (timerEl.style.display === 'none') {
+      timerEl.style.display = 'block';
+      timerRunning = true;
+      timerInterval = setInterval(() => {
+        timerSeconds++;
+        const mins = Math.floor(timerSeconds / 60);
+        const secs = timerSeconds % 60;
+        timerEl.textContent = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+      }, 1000);
+    } else {
+      timerEl.style.display = 'none';
+      timerRunning = false;
+      clearInterval(timerInterval);
+    }
+  }
+
+  function resetTimer() {
+    timerSeconds = 0;
+    timerEl.textContent = '00:00';
+  }
+
+  // Fullscreen
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  // Slide overview
+  function buildOverview() {
+    overviewGrid.innerHTML = '';
+    slides.forEach((slide, idx) => {
+      const thumb = document.createElement('div');
+      thumb.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;transition:.2s;position:relative;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;overflow:hidden';
+      
+      const counter = slide.querySelector('.counter');
+      const title = slide.querySelector('.h-th') || slide.querySelector('.t1') || slide.querySelector('.h2');
+      const titleText = title ? title.textContent.trim() : `Slide ${idx + 1}`;
+      
+      thumb.innerHTML = `
+        <div style="text-align:center">
+          <div style="font-size:32px;font-weight:800;color:var(--cyan);margin-bottom:8px">${idx + 1}</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.4;padding:0 8px">${titleText.substring(0, 60)}${titleText.length > 60 ? '...' : ''}</div>
+        </div>
+      `;
+      
+      thumb.addEventListener('mouseenter', () => {
+        thumb.style.borderColor = 'var(--cyan)';
+        thumb.style.transform = 'scale(1.05)';
+      });
+      thumb.addEventListener('mouseleave', () => {
+        thumb.style.borderColor = 'var(--border)';
+        thumb.style.transform = 'scale(1)';
+      });
+      thumb.addEventListener('click', () => {
+        show(idx);
+        slideOverview.style.display = 'none';
+      });
+      
+      overviewGrid.appendChild(thumb);
+    });
+  }
+
+  function toggleOverview() {
+    if (slideOverview.style.display === 'none') {
+      buildOverview();
+      slideOverview.style.display = 'block';
+    } else {
+      slideOverview.style.display = 'none';
+    }
+  }
+
+  function toggleShortcutsHelp() {
+    if (shortcutsHelp.style.display === 'none') {
+      shortcutsHelp.style.display = 'block';
+    } else {
+      shortcutsHelp.style.display = 'none';
+    }
+  }
+
+  // Button listeners
   document.getElementById('prev').addEventListener('click', () => show(cur - 1));
   document.getElementById('next').addEventListener('click', () => show(cur + 1));
+  document.getElementById('fullscreen').addEventListener('click', toggleFullscreen);
 
+  // Keyboard shortcuts
   document.addEventListener('keydown', (e) => {
+    // Close overlays first
+    if (e.key === 'Escape') {
+      if (slideOverview.style.display === 'block') {
+        slideOverview.style.display = 'none';
+        return;
+      }
+      if (shortcutsHelp.style.display === 'block') {
+        shortcutsHelp.style.display = 'none';
+        return;
+      }
+    }
+
+    // Don't handle shortcuts if overlays are open
+    if (slideOverview.style.display === 'block' || shortcutsHelp.style.display === 'block') {
+      return;
+    }
+
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
       e.preventDefault();
       show(cur + 1);
@@ -2318,6 +2471,43 @@ ul.tight li b{color:var(--text)}
     } else if (e.key === 'End') {
       e.preventDefault();
       show(total - 1);
+    } else if (e.key === 'f' || e.key === 'F') {
+      if (!e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        toggleFullscreen();
+      }
+    } else if (e.key === 'o' || e.key === 'O') {
+      if (!e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        toggleOverview();
+      }
+    } else if (e.key === 't' || e.key === 'T') {
+      if (!e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        toggleTimer();
+      }
+    } else if (e.key === 'r' || e.key === 'R') {
+      if (!e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        resetTimer();
+      }
+    } else if (e.key === '?') {
+      e.preventDefault();
+      toggleShortcutsHelp();
+    }
+  });
+
+  // Touch/swipe support
+  if (typeof Hammer !== 'undefined') {
+    const hammer = new Hammer(document.body);
+    hammer.on('swipeleft', () => show(cur + 1));
+    hammer.on('swiperight', () => show(cur - 1));
+  }
+
+  // Click outside to close overlays
+  shortcutsHelp.addEventListener('click', (e) => {
+    if (e.target === shortcutsHelp) {
+      shortcutsHelp.style.display = 'none';
     }
   });
 
