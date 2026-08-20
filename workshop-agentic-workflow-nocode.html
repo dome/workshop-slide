@@ -29,18 +29,25 @@ html,body{
   color:var(--text);
   font-family:'Inter','Noto Sans Thai',system-ui,sans-serif;
   -webkit-font-smoothing:antialiased;
-  min-height:100vh;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
 }
 body{
   display:flex;
-  flex-direction:column;
   align-items:center;
-  padding:32px 16px;
-  gap:24px;
+  justify-content:center;
+  padding:0;
 }
-.deck{display:flex;flex-direction:column;gap:24px;align-items:center}
-.slide{
+.deck{
   position:relative;
+  width:1280px;
+  height:720px;
+  transform-origin:center center;
+}
+.slide{
+  position:absolute;
+  inset:0;
   width:1280px;
   height:720px;
   background:var(--bg);
@@ -2331,11 +2338,20 @@ ul.tight li b{color:var(--text)}
   const shortcutsHelp = document.getElementById('shortcuts-help');
   const slideOverview = document.getElementById('slide-overview');
   const overviewGrid = document.getElementById('overview-grid');
+  const deck = document.querySelector('.deck');
 
   // Timer state
   let timerInterval = null;
   let timerSeconds = 0;
   let timerRunning = false;
+
+  // Scale to fit viewport
+  function scaleToFit() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const scale = Math.min(vw / 1280, vh / 720);
+    deck.style.transform = `scale(${scale})`;
+  }
 
   function show(i){
     cur = Math.max(0, Math.min(total-1, i));
@@ -2347,8 +2363,6 @@ ul.tight li b{color:var(--text)}
     // Update progress bar
     const progress = ((cur + 1) / total) * 100;
     progressBar.style.width = progress + '%';
-    
-    window.scrollTo({ top: slides[cur].getBoundingClientRect().top + window.scrollY - 32, behavior: 'smooth' });
   }
 
   // Timer functions
@@ -2511,7 +2525,11 @@ ul.tight li b{color:var(--text)}
     }
   });
 
-  // Initialize: show only first slide
+  // Resize handler
+  window.addEventListener('resize', scaleToFit);
+
+  // Initialize
+  scaleToFit();
   show(0);
 })();
 </script>
