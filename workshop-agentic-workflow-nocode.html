@@ -514,9 +514,9 @@ body.debug-mode::after{
             <h4>เปิดกระเป๋า Tempo Wallet</h4>
             <span class="pill blue">03</span>
           </div>
-          <p>สมัคร Tempo Wallet รับ/โอน USDC ได้ด้วยตัวเอง — บนเครือข่าย Base เร็วและถูก เหมาะกับ micropayments</p>
+          <p>สมัคร Tempo Wallet รับ/โอน USDC ได้ด้วยตัวเอง — บนเครือข่าย Tempo เร็วและถูก เหมาะกับ micropayments</p>
           <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
-            <span class="pill">Tempo Wallet</span><span class="pill">USDC</span><span class="pill">Base L2</span>
+            <span class="pill">Tempo Wallet</span><span class="pill">USDC</span><span class="pill">Tempo Blockchain</span>
           </div>
         </div>
 
@@ -788,7 +788,7 @@ body.debug-mode::after{
           </tr>
           <tr>
             <td><b>💸 Tempo Wallet</b><br><span style="color:var(--text-muted);font-size:12px">wallet.tempo.xyz</span></td>
-            <td>กระเป๋าเงิน USDC บนเครือข่าย Base (Ethereum L2)</td>
+            <td>กระเป๋าเงิน USDC บน Tempo Blockchain (รองรับ deposit จาก Base, Optimism)</td>
             <td>สมัครด้วย Email / Google / GitHub — ฟรี ไม่ต้อง KYC</td>
             <td><span class="tag ok">สมัครฟรี</span></td>
           </tr>
@@ -1384,7 +1384,7 @@ body.debug-mode::after{
       <div>
         <div class="eyebrow">Session 2 · Tempo Wallet · แนวคิด</div>
         <div class="h-th">Tempo Wallet คืออะไร?</div>
-        <div class="h-en">A digital wallet for USDC — built on Base L2</div>
+        <div class="h-en">A digital wallet for USDC — built on Tempo Blockchain</div>
       </div>
       <div class="pill cyan">WALLET</div>
     </div>
@@ -1399,7 +1399,7 @@ body.debug-mode::after{
           <div class="card">
             <div class="eyebrow" style="margin-bottom:10px">คุณสมบัติเด่น</div>
             <ul class="tight">
-              <li>ใช้บนเครือข่าย <b>Base</b> (Ethereum Layer 2 — เร็วและถูก)</li>
+              <li>ใช้บนเครือข่าย <b>Tempo Blockchain</b> (EVM-compatible — เร็วและถูก)</li>
               <li>เหมาะกับ <b>micropayments</b> — จ่าย $0.001 ถึง $1 ได้สบาย</li>
               <li><b>ฟรี</b> — สมัครได้เลยไม่ต้อง KYC สำหรับยอดเล็ก</li>
               <li>URL: <span style="color:#67e8f9">wallet.tempo.xyz</span></li>
@@ -1496,7 +1496,7 @@ body.debug-mode::after{
             <div class="step"><div class="n">5</div><div class="t">รอผู้โอนส่ง USDC มา → ยอดจะขึ้นใน <b>1–5 วินาที</b></div></div>
           </div>
 
-          <div class="step warn" style="margin-top:8px"><div class="n">!</div><div class="t"><b>⚠️ ข้อควรระวัง:</b> ส่งได้เฉพาะ address บนเครือข่าย <b style="color:#fcd34d">Base</b> เท่านั้น — ห้ามส่ง ETH/BTC มาที่ address นี้</div></div>
+          <div class="step warn" style="margin-top:8px"><div class="n">!</div><div class="t"><b>⚠️ ข้อควรระวัง:</b> ส่งได้เฉพาะ USDC บน <b style="color:#fcd34d">Tempo Blockchain</b> — รองรับ deposit จาก Base, Optimism</div></div>
         </div>
 
         <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
@@ -1534,7 +1534,7 @@ body.debug-mode::after{
           <div class="steps">
             <div class="step"><div class="n">1</div><div class="t">ใน Tempo Wallet → แตะปุ่ม <b>Send</b> (ไอคอน ➤)</div></div>
             <div class="step"><div class="n">2</div><div class="t">วาง <b>wallet address</b> ปลายทาง (Ctrl+V หรือแตะค้าง + Paste) — หรือสแกน QR code ของผู้รับ</div></div>
-            <div class="step"><div class="n">3</div><div class="t">ใส่จำนวน USDC: เช่น <span class="em">0.01</span> (≈ $0.01 หรือ 35 สตางค์) — ระบบแสดง <b>Network Fee</b> (gas) ≈ $0.001 บน Base</div></div>
+            <div class="step"><div class="n">3</div><div class="t">ใส่จำนวน USDC: เช่น <span class="em">0.01</span> (≈ $0.01 หรือ 35 สตางค์) — ระบบแสดง <b>Network Fee</b> (gas) ≈ $0.001 บน Tempo</div></div>
             <div class="step"><div class="n">4</div><div class="t">แตะ <b>Review</b> → ตรวจสอบ: ผู้รับ · จำนวน · Fee · รวม</div></div>
             <div class="step"><div class="n">5</div><div class="t">ใส่ <b>PIN 6 หลัก</b> → แตะ <b>Confirm</b></div></div>
             <div class="step"><div class="n">6</div><div class="t">รอ 3–5 วินาที → สถานะเปลี่ยนเป็น ✅ <b>Success</b></div></div>
@@ -1849,7 +1849,7 @@ body.debug-mode::after{
             <div class="step"><div class="n">8</div><div class="t">รอ <b>5–10 วินาที</b> → กลับไปที่ tryponcho.com → รีเฟรช → ยอด <b>Balance</b> อัปเดต</div></div>
           </div>
 
-          <div class="step warn" style="margin-top:8px"><div class="n">!</div><div class="t"><b>⚠️ ระวัง:</b> โอนได้เฉพาะ USDC บน <b style="color:#fcd34d">Base</b> เท่านั้น · ขั้นต่ำแนะนำ 1 USDC · โอนผิด chain → ติดต่อ support ทันที</div></div>
+          <div class="step warn" style="margin-top:8px"><div class="n">!</div><div class="t"><b>⚠️ ระวัง:</b> โอนได้เฉพาะ USDC บน <b style="color:#fcd34d">Tempo</b> (รองรับ deposit จาก Base, Optimism) · ขั้นต่ำแนะนำ 1 USDC · โอนผิด chain → ติดต่อ support ทันที</div></div>
         </div>
 
         <div style="display:flex;flex-direction:column;gap:10px">
@@ -1904,7 +1904,7 @@ body.debug-mode::after{
 
           <div class="insight" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.06));border-color:rgba(16,185,129,.3)">
             <div class="ic">🔍</div>
-            <div class="tx">ความ<b style="color:#6ee7b7">โปร่งใส</b>คือหัวใจของ autonomous economy — ทุก transaction ตรวจสอบได้สาธารณะบน Base blockchain</div>
+            <div class="tx">ความ<b style="color:#6ee7b7">โปร่งใส</b>คือหัวใจของ autonomous economy — ทุก transaction ตรวจสอบได้สาธารณะบน Tempo Blockchain</div>
           </div>
         </div>
 
@@ -1919,7 +1919,7 @@ body.debug-mode::after{
           <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(139,92,246,.04));padding:12px">
             <div style="font-size:12px;color:var(--cyan);font-weight:700;margin-bottom:4px">📍 TEMPO EXPLORER</div>
             <div style="font-size:13px;color:var(--text);font-family:monospace">explore.tempo.xyz</div>
-            <div style="font-size:11px;color:var(--text-2);margin-top:4px">ตรวจสอบ USDC transactions บน Base L2</div>
+            <div style="font-size:11px;color:var(--text-2);margin-top:4px">ตรวจสอบ USDC transactions บน Tempo Blockchain</div>
           </div>
         </div>
       </div>
