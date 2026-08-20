@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Workflow & Autonomous Commerce — No-Code Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e1a;
+  --surface:#131829;
+  --surface-2:#1a2038;
+  --border:#252b45;
+  --primary:#3b82f6;
+  --primary-2:#8b5cf6;
+  --cyan:#06b6d4;
+  --success:#10b981;
+  --warning:#f59e0b;
+  --danger:#f43f5e;
+  --text:#f1f5f9;
+  --text-2:#94a3b8;
+  --text-muted:#64748b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter','Noto Sans Thai',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+body{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:32px 16px;
+  gap:24px;
+}
+.deck{display:flex;flex-direction:column;gap:24px;align-items:center}
+.slide{
+  position:relative;
+  width:1280px;
+  height:720px;
+  background:var(--bg);
+  color:var(--text);
+  overflow:hidden;
+  border-radius:16px;
+  border:1px solid var(--border);
+  box-shadow:0 30px 60px rgba(0,0,0,.5);
+  font-family:'Inter','Noto Sans Thai',sans-serif;
+}
+.slide::before{
+  content:"";
+  position:absolute;inset:0;
+  background:radial-gradient(circle at 100% 0%, rgba(59,130,246,.08), transparent 45%),
+             radial-gradient(circle at 0% 100%, rgba(139,92,246,.05), transparent 40%);
+  pointer-events:none;
+  z-index:0;
+}
+.slide > *{position:relative;z-index:1}
+
+/* Inner padding wrapper */
+.pad{padding:56px 72px;height:100%;display:flex;flex-direction:column}
+
+/* Header / eyebrow */
+.eyebrow{
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-size:12px;
+  font-weight:700;
+  color:var(--cyan);
+  margin-bottom:10px;
+}
+.h-th{
+  font-size:38px;
+  font-weight:800;
+  letter-spacing:-.02em;
+  line-height:1.15;
+  color:var(--text);
+}
+.h-en{
+  font-size:16px;
+  font-weight:500;
+  color:var(--text-2);
+  margin-top:4px;
+  letter-spacing:.02em;
+}
+
+/* Footer */
+.foot{
+  position:absolute;
+  left:72px;right:72px;bottom:18px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:11px;color:var(--text-muted);
+  letter-spacing:.08em;
+}
+.foot .brand{display:flex;align-items:center;gap:8px}
+.foot .brand .dot{width:6px;height:6px;border-radius:50%;background:linear-gradient(90deg,var(--primary),var(--primary-2))}
+.foot .counter{font-variant-numeric:tabular-nums;color:var(--text-2)}
+
+/* Cover */
+.cover{
+  background:linear-gradient(135deg,#0a0e1a 0%,#0e1426 50%,#0a0e1a 100%);
+}
+.cover .bg{
+  position:absolute;inset:0;
+  background:url('https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/4c7111e964ab.jpg') center/cover no-repeat;
+  opacity:.12;
+  filter:grayscale(.3) saturate(.8);
+  z-index:0;
+}
+.cover .glow{
+  position:absolute;top:-180px;right:-180px;
+  width:620px;height:620px;
+  background:radial-gradient(circle, rgba(59,130,246,.45) 0%, rgba(139,92,246,.25) 35%, transparent 70%);
+  filter:blur(20px);
+  z-index:0;
+}
+.cover .glow2{
+  position:absolute;bottom:-220px;left:-120px;
+  width:480px;height:480px;
+  background:radial-gradient(circle, rgba(6,182,212,.25) 0%, transparent 65%);
+  filter:blur(30px);
+  z-index:0;
+}
+.cover .inner{
+  position:relative;z-index:2;
+  height:100%;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:64px 80px;
+}
+.cover .top-row{display:flex;justify-content:space-between;align-items:flex-start}
+.cover .badge{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:10px 18px;border-radius:999px;
+  background:rgba(59,130,246,.12);
+  border:1px solid rgba(59,130,246,.35);
+  color:#bfdbfe;font-size:13px;font-weight:600;letter-spacing:.04em;
+}
+.cover .badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 0 rgba(6,182,212,.7);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(6,182,212,.6)}70%{box-shadow:0 0 0 12px rgba(6,182,212,0)}100%{box-shadow:0 0 0 0 rgba(6,182,212,0)}}
+.cover .meta-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;border-top:1px solid var(--border);padding-top:28px}
+.cover .meta-item .lab{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--cyan);font-weight:700;margin-bottom:6px}
+.cover .meta-item .val{font-size:18px;color:var(--text);font-weight:600}
+.cover .title-block .t1{font-size:74px;font-weight:900;line-height:1.02;letter-spacing:-.035em;background:linear-gradient(120deg,#f1f5f9 0%,#bfdbfe 45%,#c4b5fd 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover .title-block .t2{font-size:24px;color:var(--text-2);font-weight:400;margin-top:14px;line-height:1.4;max-width:820px}
+.cover .chips{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.cover .chip{padding:8px 16px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);font-size:13px;color:var(--text-2);font-weight:500}
+.cover .chip b{color:var(--text)}
+.cover .num-stamp{font-family:'Inter',sans-serif;font-size:160px;font-weight:900;color:rgba(255,255,255,.025);line-height:1;letter-spacing:-.05em;position:absolute;right:80px;bottom:140px;z-index:1}
+
+/* Cards */
+.card{
+  background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:20px 22px;
+  position:relative;
+  overflow:hidden;
+}
+.card.glow::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--primary),var(--primary-2));
+}
+.card .ico{
+  width:38px;height:38px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);
+  font-size:20px;
+  margin-bottom:12px;
+}
+.card h4{font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px}
+.card p{font-size:14px;line-height:1.6;color:var(--text-2)}
+
+/* Grid utilities */
+.grid{display:grid;gap:18px}
+.grid-2{grid-template-columns:1fr 1fr}
+.grid-3{grid-template-columns:1fr 1fr 1fr}
+.grid-4{grid-template-columns:1fr 1fr 1fr 1fr}
+
+/* Tables */
+.tbl{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:14px}
+.tbl th,.tbl td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}
+.tbl th{background:var(--surface-2);color:var(--cyan);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td{color:var(--text-2)}
+.tbl td b{color:var(--text)}
+.tbl tr:hover td{background:rgba(59,130,246,.04)}
+.tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600}
+.tag.ok{background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(16,185,129,.3)}
+.tag.warn{background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.3)}
+
+/* Steps */
+.steps{counter-reset:step;display:flex;flex-direction:column;gap:10px}
+.step{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;
+}
+.step .n{
+  flex-shrink:0;
+  width:26px;height:26px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--primary-2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:#fff;
+}
+.step .t{font-size:13.5px;line-height:1.55;color:var(--text)}
+.step .t b{color:#fff}
+.step .t .em{color:var(--cyan)}
+.step.warn{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.04)}
+.step.warn .n{background:linear-gradient(135deg,var(--warning),#fb923c)}
+
+/* Image frame */
+.figure{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.figure .frame{
+  border:1px solid var(--border);border-radius:8px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45), 0 0 0 1px rgba(59,130,246,.06);
+  overflow:hidden;background:var(--surface);
+  position:relative;
+}
+.figure .frame::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg, rgba(59,130,246,.05) 0%, transparent 50%);
+  pointer-events:none;
+}
+.figure img{display:block}
+.figure.phone img{max-height:460px;max-width:240px;object-fit:cover}
+.figure.wide img{max-height:380px;width:100%;object-fit:cover}
+.figure figcaption{
+  font-size:12px;color:var(--text-muted);text-align:center;font-style:italic;
+  max-width:280px;
+}
+
+/* Chat bubbles */
+.chat{display:flex;flex-direction:column;gap:8px}
+.bubble{
+  max-width:90%;padding:10px 14px;border-radius:12px;
+  font-size:13px;line-height:1.5;
+}
+.bubble.me{align-self:flex-end;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;border-bottom-right-radius:4px}
+.bubble.agent{align-self:flex-start;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-bottom-left-radius:4px}
+.bubble .who{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--cyan);font-weight:700;margin-bottom:3px}
+
+/* Timeline */
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--primary),var(--primary-2),var(--cyan))}
+.tl-item{position:relative;padding-bottom:14px}
+.tl-item:last-child{padding-bottom:0}
+.tl-item .dot{position:absolute;left:-28px;top:4px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--primary);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--cyan)}
+.tl-item .time{font-size:12px;color:var(--cyan);font-weight:700;letter-spacing:.04em}
+.tl-item .lab{font-size:14px;color:var(--text);font-weight:600;margin-top:2px}
+.tl-item .desc{font-size:12px;color:var(--text-2);margin-top:2px}
+.tl-item.break .dot{border-color:var(--warning);color:var(--warning)}
+
+/* Stat cards */
+.stat{
+  background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);
+  border:1px solid var(--border);border-radius:12px;padding:18px;
+  position:relative;overflow:hidden;
+}
+.stat .lab{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);font-weight:600}
+.stat .val{font-size:32px;font-weight:800;color:var(--text);margin-top:6px;letter-spacing:-.02em}
+.stat .val .unit{font-size:14px;color:var(--text-2);font-weight:500;margin-left:4px}
+.stat::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--primary),var(--primary-2))}
+.stat.cyan::before{background:linear-gradient(90deg,var(--cyan),var(--primary))}
+.stat.green::before{background:linear-gradient(90deg,var(--success),var(--cyan))}
+
+/* Pills */
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:600;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text-2)}
+.pill.blue{background:rgba(59,130,246,.12);color:#bfdbfe;border-color:rgba(59,130,246,.35)}
+.pill.violet{background:rgba(139,92,246,.12);color:#ddd6fe;border-color:rgba(139,92,246,.35)}
+.pill.cyan{background:rgba(6,182,212,.12);color:#67e8f9;border-color:rgba(6,182,212,.35)}
+.pill.green{background:rgba(16,185,129,.12);color:#6ee7b7;border-color:rgba(16,185,129,.35)}
+
+/* Diagram */
+.diag{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:8px}
+.diag .row{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap}
+.box{
+  padding:12px 18px;border-radius:10px;
+  background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);
+  border:1px solid var(--border);
+  font-size:13px;font-weight:600;color:var(--text);
+  text-align:center;min-width:140px;
+}
+.box.blue{border-color:rgba(59,130,246,.45);background:linear-gradient(180deg,rgba(59,130,246,.1),rgba(59,130,246,.04))}
+.box.violet{border-color:rgba(139,92,246,.45);background:linear-gradient(180deg,rgba(139,92,246,.1),rgba(139,92,246,.04))}
+.box.cyan{border-color:rgba(6,182,212,.45);background:linear-gradient(180deg,rgba(6,182,212,.1),rgba(6,182,212,.04))}
+.box.green{border-color:rgba(16,185,129,.45);background:linear-gradient(180deg,rgba(16,185,129,.1),rgba(16,185,129,.04))}
+.box .sub{display:block;font-size:11px;font-weight:400;color:var(--text-2);margin-top:3px}
+.arrow{color:var(--cyan);font-size:22px;line-height:1}
+.arrow-down{color:var(--cyan);font-size:20px}
+
+/* Insight */
+.insight{
+  background:linear-gradient(135deg, rgba(59,130,246,.08), rgba(139,92,246,.08));
+  border:1px solid rgba(59,130,246,.3);
+  border-radius:12px;padding:14px 18px;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.insight .ic{font-size:22px}
+.insight .tx{font-size:13.5px;line-height:1.55;color:var(--text)}
+.insight .tx b{color:#bfdbfe}
+
+/* Two-column layout */
+.col2{display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1;min-height:0}
+.col-aside{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;flex:1;min-height:0}
+
+/* Section content scroll fix */
+.content{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px;margin-top:18px}
+
+/* Headings */
+.h2{font-size:28px;font-weight:800;letter-spacing:-.02em;color:var(--text);line-height:1.2}
+.h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
+
+/* Decoration */
+[data-decor]{pointer-events:none}
+
+/* Nav controls (outside slides) */
+.nav-controls{
+  position:fixed;
+  bottom:24px;right:24px;
+  display:flex;gap:8px;align-items:center;
+  background:rgba(19,24,41,.9);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:8px 14px;
+  backdrop-filter:blur(10px);
+  z-index:1000;
+  font-family:'Inter',sans-serif;
+}
+.nav-controls button{
+  background:transparent;border:none;color:var(--text-2);
+  cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;
+  transition:.2s;
+}
+.nav-controls button:hover{background:rgba(59,130,246,.2);color:#fff}
+.nav-controls .count{font-size:13px;color:var(--text);font-weight:600;min-width:60px;text-align:center;font-variant-numeric:tabular-nums}
+
+/* Safety lists */
+.safe-list{display:flex;flex-direction:column;gap:6px}
+.safe-list li{
+  list-style:none;font-size:13px;line-height:1.5;color:var(--text-2);
+  padding-left:24px;position:relative;
+}
+.safe-list li::before{position:absolute;left:0;top:0;font-weight:700}
+.safe-list.do li::before{content:"✅";color:var(--success)}
+.safe-list.watch li::before{content:"⚠️";color:var(--warning)}
+.safe-list.avoid li::before{content:"❌";color:var(--danger)}
+
+/* Big stat */
+.bignum{font-size:88px;font-weight:900;line-height:1;letter-spacing:-.04em;background:linear-gradient(120deg,var(--cyan),var(--primary),var(--primary-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* QR placeholder */
+.qr{
+  width:120px;height:120px;
+  background:
+    linear-gradient(45deg,#0a0e1a 25%,transparent 25%) 0 0/12px 12px,
+    linear-gradient(-45deg,#0a0e1a 25%,transparent 25%) 0 0/12px 12px,
+    linear-gradient(45deg,transparent 75%,#0a0e1a 75%) 0 0/12px 12px,
+    linear-gradient(-45deg,transparent 75%,#0a0e1a 75%) 0 0/12px 12px,
+    var(--text);
+  border:8px solid var(--text);
+  border-radius:8px;
+}
+
+/* highlight box */
+.hl{
+  background:linear-gradient(135deg, rgba(6,182,212,.1), rgba(59,130,246,.08));
+  border:1px solid rgba(6,182,212,.3);
+  border-radius:10px;padding:10px 14px;
+  font-size:13px;color:var(--text);line-height:1.5;
+}
+.hl b{color:#67e8f9}
+
+/* small heading */
+.eyebrow-row{display:flex;justify-content:space-between;align-items:flex-end}
+.eyebrow-row .right{display:flex;gap:8px}
+
+ul.tight{list-style:none;display:flex;flex-direction:column;gap:6px}
+ul.tight li{font-size:13.5px;line-height:1.55;color:var(--text-2);padding-left:16px;position:relative}
+ul.tight li::before{content:"•";position:absolute;left:0;color:var(--cyan)}
+ul.tight li b{color:var(--text)}
+
+/* big quote / hero */
+.hero-text{font-size:36px;font-weight:800;line-height:1.25;letter-spacing:-.02em;color:var(--text)}
+.hero-text .accent{background:linear-gradient(120deg,var(--cyan),var(--primary));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* Soft scrollable region (no scroll, but compact) */
+.compact{gap:10px}
+
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+<!-- ============== SLIDE 1: COVER ============== -->
+<section class="slide cover" data-slide="1">
+  <div class="bg" data-decor></div>
+  <div class="glow" data-decor></div>
+  <div class="glow2" data-decor></div>
+  <div class="num-stamp" data-decor>2025</div>
+  <div class="inner">
+    <div class="top-row">
+      <div class="badge"><span class="pulse"></span> LIVE WORKSHOP · NO CODE REQUIRED</div>
+      <div style="text-align:right;color:var(--text-2);font-size:12px;letter-spacing:.1em">
+        <div style="color:var(--cyan);font-weight:700">VERSION 2.0</div>
+        <div>FOR NON-PROGRAMMERS</div>
+      </div>
+    </div>
+
+    <div class="title-block">
+      <div style="font-size:13px;color:var(--cyan);font-weight:700;letter-spacing:.18em;margin-bottom:14px;text-transform:uppercase">เวิร์กชอปปฏิบัติการ · 2 ชั่วโมง</div>
+      <div class="t1">Agentic Workflow<br>&amp; Autonomous Commerce</div>
+      <div class="t2">เวิร์กชอปปฏิบัติการ 2 ชั่วโมง · เวอร์ชันมือใหม่ — ไม่ต้องเขียนโค้ด<br><span style="color:var(--text-muted);font-size:18px">Build your first AI agent · Pay with USDC · Shop autonomously</span></div>
+      <div class="chips">
+        <div class="chip">⏱ <b>2 Hours</b> · Hands-on</div>
+        <div class="chip">🚫 <b>No Code</b> · Plain Language</div>
+        <div class="chip">🤖 <b>Telegram + ERPNext</b></div>
+        <div class="chip">💸 <b>Tempo Wallet + USDC</b></div>
+        <div class="chip">🛒 <b>tryponcho.com</b></div>
+      </div>
+    </div>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="lab">Audience</div>
+        <div class="val">ผู้เริ่มต้น · มือใหม่ทุกระดับ</div>
+      </div>
+      <div class="meta-item">
+        <div class="lab">Tools</div>
+        <div class="val">Telegram · Tempo · Poncho</div>
+      </div>
+      <div class="meta-item">
+        <div class="lab">Outcome</div>
+        <div class="val">Agent + Wallet + Marketplace</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">01 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 2: LEARNING OBJECTIVES ============== -->
+<section class="slide" data-slide="2">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Learning Objectives · สิ่งที่จะได้เรียนรู้</div>
+        <div class="h-th">สิ่งที่คุณจะได้เรียนรู้ใน 2 ชั่วโมง</div>
+        <div class="h-en">4 hands-on outcomes — no prior coding experience needed</div>
+      </div>
+      <div class="pill cyan">4 OBJECTIVES</div>
+    </div>
+
+    <div class="content">
+      <div class="grid grid-2" style="gap:18px;flex:1">
+        <div class="card glow">
+          <div class="ico">📱</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <h4>ติดตั้ง Telegram + สร้าง Bot</h4>
+            <span class="pill blue">01</span>
+          </div>
+          <p>ติดตั้งแอป Telegram บนมือถือ/PC และสร้าง Bot แรกของคุณผ่าน BotFather — เพื่อคุยกับ Agent โดยไม่ต้องเขียนโค้ด</p>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+            <span class="pill">Telegram</span><span class="pill">BotFather</span><span class="pill">API Token</span>
+          </div>
+        </div>
+
+        <div class="card glow">
+          <div class="ico">💬</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <h4>แชทกับ Agent · อ่านไฟล์ + สั่ง ERP</h4>
+            <span class="pill blue">02</span>
+          </div>
+          <p>ใช้ Agent อ่านไฟล์ CSV/Excel และสั่งงาน ERPNext ผ่านแชทธรรมดา — สร้างใบสั่งขาย ดูสต็อก ได้ด้วยข้อความ</p>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+            <span class="pill">CSV / Excel</span><span class="pill">ERPNext</span><span class="pill">MCP</span>
+          </div>
+        </div>
+
+        <div class="card glow">
+          <div class="ico">💸</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <h4>เปิดกระเป๋า Tempo Wallet</h4>
+            <span class="pill blue">03</span>
+          </div>
+          <p>สมัคร Tempo Wallet รับ/โอน USDC ได้ด้วยตัวเอง — บนเครือข่าย Base เร็วและถูก เหมาะกับ micropayments</p>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+            <span class="pill">Tempo Wallet</span><span class="pill">USDC</span><span class="pill">Base L2</span>
+          </div>
+        </div>
+
+        <div class="card glow">
+          <div class="ico">🛒</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <h4>ให้ Agent ซื้อของจริง + ตรวจสอบ</h4>
+            <span class="pill blue">04</span>
+          </div>
+          <p>ให้ Agent สั่งซื้อสินค้าจริงบน tryponcho.com และตรวจสอบธุรกรรมบน x402scan / mppscan ได้อย่างโปร่งใส</p>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+            <span class="pill">tryponcho.com</span><span class="pill">x402</span><span class="pill">MPP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">02 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 3: AGENDA ============== -->
+<section class="slide" data-slide="3">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Workshop Agenda · ตารางเรียน</div>
+        <div class="h-th">ตารางเรียน 2 ชั่วโมง</div>
+        <div class="h-en">7 sessions · hands-on · 10-minute break included</div>
+      </div>
+      <div class="pill violet">⏱ 120 MINUTES</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="dot">1</div>
+            <div class="time">00:00 — 00:10 · 10 min</div>
+            <div class="lab">Kickoff &amp; Setup</div>
+            <div class="desc">ทำความรู้จักกัน + เช็คบัญชี/เครื่องมือให้พร้อม</div>
+          </div>
+          <div class="tl-item">
+            <div class="dot">2</div>
+            <div class="time">00:10 — 00:35 · 25 min</div>
+            <div class="lab">Chat to Data</div>
+            <div class="desc">ส่งไฟล์ CSV ให้ Agent → ถามคำถามภาษาไทย → ได้คำตอบ + กราฟ</div>
+          </div>
+          <div class="tl-item">
+            <div class="dot">3</div>
+            <div class="time">00:35 — 01:00 · 25 min</div>
+            <div class="lab">Chat to ERP</div>
+            <div class="desc">สั่งงาน ERPNext ผ่านแชท → สร้างใบสั่งขาย SO-2025-xxxx</div>
+          </div>
+          <div class="tl-item break">
+            <div class="dot">☕</div>
+            <div class="time">01:00 — 01:10 · 10 min</div>
+            <div class="lab">Break · พักสายตา</div>
+            <div class="desc">ดื่มน้ำ ยืดเส้นยืดสาย</div>
+          </div>
+          <div class="tl-item">
+            <div class="dot">4</div>
+            <div class="time">01:10 — 01:35 · 25 min</div>
+            <div class="lab">Agentic Wallet &amp; Protocols</div>
+            <div class="desc">เปิด Tempo Wallet · รับ/โอน USDC · เรียนรู้ x402 + MPP</div>
+          </div>
+          <div class="tl-item">
+            <div class="dot">5</div>
+            <div class="time">01:35 — 01:55 · 20 min</div>
+            <div class="lab">Autonomous Shopping</div>
+            <div class="desc">ฝากเงินเข้า Poncho → ซื้อบริการจริง → ตรวจสอบบน explorer</div>
+          </div>
+          <div class="tl-item">
+            <div class="dot">6</div>
+            <div class="time">01:55 — 02:00 · 5 min</div>
+            <div class="lab">Q&amp;A &amp; Wrap-up</div>
+            <div class="desc">ถาม-ตอบ + สรุป + แหล่งเรียนรู้ต่อ</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(139,92,246,.05))">
+            <div class="eyebrow" style="margin-bottom:8px">ในเวิร์กชอปนี้คุณจะ</div>
+            <ul class="tight">
+              <li>สร้าง <b>Telegram Bot</b> เป็นของตัวเอง</li>
+              <li>เปิด <b>Tempo Wallet</b> จริง</li>
+              <li>รับ/โอน <b>USDC</b> จริง</li>
+              <li>ซื้อบริการบน <b>tryponcho.com</b> จริง</li>
+              <li>ตรวจสอบทุก transaction บน explorer</li>
+            </ul>
+          </div>
+          <div class="insight">
+            <div class="ic">💡</div>
+            <div class="tx">ทุกอย่างทำได้<b>โดยไม่ต้องเขียนโค้ด</b> — ใช้แค่เบราว์เซอร์ + มือถือ + ใจกล้า</div>
+          </div>
+          <div class="stat cyan">
+            <div class="lab">Total Hands-on Time</div>
+            <div class="val">95<span class="unit">min · 80% ของเวลาเรียน</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">03 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 4: WHAT IS AN AGENT ============== -->
+<section class="slide" data-slide="4">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Concept · แนวคิดพื้นฐาน</div>
+        <div class="h-th">Agent คืออะไร?</div>
+        <div class="h-en">What is an AI Agent — explained without jargon</div>
+      </div>
+      <div class="pill cyan">CONCEPT 01</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="hl" style="font-size:16px;line-height:1.5">
+            <b>Agent</b> = ผู้ช่วย AI ที่ไม่ใช่แค่ตอบคำถาม — แต่<b>ทำงานได้จริง</b>
+          </div>
+
+          <div class="card">
+            <div class="eyebrow" style="margin-bottom:8px">เปรียบเทียบ</div>
+            <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center">
+              <div style="text-align:center">
+                <div style="font-size:32px;margin-bottom:6px">💬</div>
+                <div style="font-weight:700;color:var(--text);font-size:14px">ChatGPT ปกติ</div>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px">= ที่ปรึกษา<br>ให้คำแนะนำ แต่ไม่ลงมือทำ</div>
+              </div>
+              <div class="arrow">→</div>
+              <div style="text-align:center">
+                <div style="font-size:32px;margin-bottom:6px">🤖</div>
+                <div style="font-weight:700;color:#bfdbfe;font-size:14px">Agent</div>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px">= ผู้ช่วยที่ลงมือทำ<br>คิด + ใช้เครื่องมือ + ส่งมอบ</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="eyebrow" style="margin-bottom:8px">ตัวอย่างจริง</div>
+            <div style="font-size:13px;color:var(--text-2);line-height:1.6">
+              คุณบอก: <b style="color:var(--text)">"หายอดขายเดือนนี้ให้หน่อย"</b><br>
+              → Agent <b style="color:#bfdbfe">ไปเปิดไฟล์</b> → <b style="color:#bfdbfe">อ่าน</b> → <b style="color:#bfdbfe">สรุป</b> → <b style="color:#bfdbfe">ตอบกลับ</b> ในแชท
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="figure wide">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7b56160d66a9.png" alt="AI workflow automation diagram">
+            </div>
+            <figcaption>ภาพ Agent ทำงานอัตโนมัติ — รับคำสั่ง → คิด → ใช้เครื่องมือ → ส่งผล</figcaption>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div class="box blue" style="padding:10px;min-width:auto">📖<span class="sub">อ่านข้อมูล</span></div>
+            <div class="box violet" style="padding:10px;min-width:auto">🧠<span class="sub">คิดวิเคราะห์</span></div>
+            <div class="box cyan" style="padding:10px;min-width:auto">🔧<span class="sub">ใช้เครื่องมือ</span></div>
+            <div class="box green" style="padding:10px;min-width:auto">💸<span class="sub">จ่ายเงิน <span style="color:#6ee7b7">(ใหม่!)</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">04 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 5: KEY CONCEPTS ============== -->
+<section class="slide" data-slide="5">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">3 Key Concepts · 3 แนวคิดหลัก</div>
+        <div class="h-th">3 แนวคิดหลักของเวิร์กชอป</div>
+        <div class="h-en">Agentic Workflow · MCP · Autonomous Commerce</div>
+      </div>
+      <div class="pill violet">CORE</div>
+    </div>
+
+    <div class="content">
+      <div class="grid grid-3" style="gap:18px">
+        <div class="card glow">
+          <div class="ico" style="background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.3)">⚙️</div>
+          <h4>Agentic Workflow</h4>
+          <p>ระบบที่ AI <b style="color:#bfdbfe">วางแผน + เรียกเครื่องมือ + ทำงานอัตโนมัติ</b> โดยไม่ต้องกดอนุมัติทีละขั้น</p>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted)">ภาษาไทย: ขั้นตอนการทำงานอัตโนมัติของ AI</div>
+        </div>
+
+        <div class="card glow">
+          <div class="ico" style="background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.3)">🔌</div>
+          <h4>MCP</h4>
+          <p><b style="color:#ddd6fe">"ปลั๊กอิน" มาตรฐาน</b> ที่ให้ Agent เชื่อมกับระบบอื่น ๆ (ERP · ไฟล์ · API) ผ่านพอร์ตเดียว</p>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted)">Model Context Protocol · เหมือน USB-C ของโลก AI</div>
+        </div>
+
+        <div class="card glow">
+          <div class="ico" style="background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3)">💸</div>
+          <h4>Autonomous Commerce</h4>
+          <p>Agent <b style="color:#67e8f9">จ่ายเงินซื้อของด้วยตัวเอง</b> ผ่าน x402 / MPP — จ่ายต่อครั้ง ไม่ต้องสมัครสมาชิก</p>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted)">การค้าอัตโนมัติ · pay-per-use ผ่าน protocol</div>
+        </div>
+      </div>
+
+      <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(6,182,212,.04));border-color:rgba(59,130,246,.2)">
+        <div class="eyebrow" style="margin-bottom:14px">ง่าย ๆ · 5 ขั้นตอนของระบบ</div>
+        <div class="diag" style="margin-top:0">
+          <div class="row">
+            <div class="box">👤 บอกงาน<span class="sub">ภาษาไทยใน Telegram</span></div>
+            <span class="arrow">→</span>
+            <div class="box blue">🤖 Agent คิด<span class="sub">วางแผน + ตัดสินใจ</span></div>
+            <span class="arrow">→</span>
+            <div class="box violet">🔧 ใช้เครื่องมือ<span class="sub">MCP Server</span></div>
+            <span class="arrow">→</span>
+            <div class="box cyan">💸 จ่ายเงิน<span class="sub">x402 / MPP</span></div>
+            <span class="arrow">→</span>
+            <div class="box green">✅ ส่งผล<span class="sub">กลับ Telegram</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">05 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 6: TOOLS TO PREPARE ============== -->
+<section class="slide" data-slide="6">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Tools &amp; Accounts · บัญชีที่ต้องเตรียม</div>
+        <div class="h-th">บัญชี / เครื่องมือที่ต้องเตรียม</div>
+        <div class="h-en">Checklist before the workshop — all free, no credit card needed</div>
+      </div>
+      <div class="pill green">✓ CHECKLIST</div>
+    </div>
+
+    <div class="content">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th style="width:22%">บัญชี / เครื่องมือ</th>
+            <th style="width:30%">ใช้ทำอะไร</th>
+            <th style="width:33%">ขั้นตอนเตรียม</th>
+            <th style="width:15%">สถานะ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>📱 Telegram</b><br><span style="color:var(--text-muted);font-size:12px">telegram.org</span></td>
+            <td>แชทกับ Agent — หน้าจอหลักที่ใช้ตลอดเวิร์กชอป</td>
+            <td>ติดตั้งลงมือถือ (iOS/Android) หรือ PC</td>
+            <td><span class="tag ok">ติดตั้งง่าย</span></td>
+          </tr>
+          <tr>
+            <td><b>💸 Tempo Wallet</b><br><span style="color:var(--text-muted);font-size:12px">wallet.tempo.xyz</span></td>
+            <td>กระเป๋าเงิน USDC บนเครือข่าย Base (Ethereum L2)</td>
+            <td>สมัครด้วย Email / Google / GitHub — ฟรี ไม่ต้อง KYC</td>
+            <td><span class="tag ok">สมัครฟรี</span></td>
+          </tr>
+          <tr>
+            <td><b>🛒 tryponcho.com</b><br><span style="color:var(--text-muted);font-size:12px">tryponcho.com</span></td>
+            <td>marketplace สำหรับ Agent — มี 3,000+ บริการ</td>
+            <td>สมัครด้วย Tempo Wallet (login ด้วย wallet)</td>
+            <td><span class="tag ok">สมัครฟรี</span></td>
+          </tr>
+          <tr>
+            <td><b>📊 ไฟล์ CSV / Excel</b><br><span style="color:var(--text-muted);font-size:12px">sales_2025.csv</span></td>
+            <td>ข้อมูลทดสอบสำหรับ Chat to Data</td>
+            <td>ดาวน์โหลดจากลิงก์ที่โค้ชแจกในกลุ่ม</td>
+            <td><span class="tag warn">รอโค้ชแจก</span></td>
+          </tr>
+          <tr>
+            <td><b>🏢 ERPNext URL</b><br><span style="color:var(--text-muted);font-size:12px">+ API Key</span></td>
+            <td>ระบบ ERP ของบริษัท สำหรับทดลองสั่งงาน</td>
+            <td>ขอ URL + API Key จากโค้ชก่อนเริ่ม</td>
+            <td><span class="tag warn">ขอจากโค้ช</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight" style="margin-top:auto">
+        <div class="ic">💡</div>
+        <div class="tx">ทั้งหมดนี้<b>ฟรี 100%</b> — ไม่ต้องใช้บัตรเครดิต · ไม่ต้องสมัครสมาชิกรายเดือน · ใช้ได้ทันทีหลังสมัคร</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">06 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 7: INSTALL TELEGRAM ============== -->
+<section class="slide" data-slide="7">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 1 · Step 1 · ติดตั้ง Telegram</div>
+        <div class="h-th">ติดตั้ง Telegram บนมือถือ &amp; PC</div>
+        <div class="h-en">Install Telegram — Mobile + Desktop</div>
+      </div>
+      <div class="pill cyan">⏱ 5 นาที</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+              <div class="ico" style="margin:0;width:32px;height:32px;font-size:16px">📱</div>
+              <h4 style="margin:0">มือถือ (Mobile)</h4>
+            </div>
+            <div class="steps" style="gap:6px">
+              <div class="step"><div class="n">1</div><div class="t">เปิด <b>App Store</b> (iOS) หรือ <b>Google Play</b> (Android)</div></div>
+              <div class="step"><div class="n">2</div><div class="t">ค้นหา <b>"Telegram"</b> → ติดตั้งแอปอย่างเป็นทางการ (ไอคอนเครื่องบินกระดาษสีน้ำเงิน)</div></div>
+              <div class="step"><div class="n">3</div><div class="t">เปิดแอป → ใส่<b>เบอร์โทรศัพท์</b> → รับ SMS รหัสยืนยัน</div></div>
+              <div class="step"><div class="n">4</div><div class="t">ตั้ง<b>ชื่อบัญชี</b> + <b>รูปโปรไฟล์</b></div></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+              <div class="ico" style="margin:0;width:32px;height:32px;font-size:16px">💻</div>
+              <h4 style="margin:0">PC / Laptop</h4>
+            </div>
+            <div class="steps" style="gap:6px">
+              <div class="step"><div class="n">1</div><div class="t">เปิดเบราว์เซอร์ → ไปที่ <span class="em">desktop.telegram.org</span></div></div>
+              <div class="step"><div class="n">2</div><div class="t">ดาวน์โหลดเวอร์ชัน <b>Windows</b> / <b>macOS</b></div></div>
+              <div class="step"><div class="n">3</div><div class="t">ติดตั้ง → เปิดแอป → <b>สแกน QR</b> ด้วยมือถือ</div></div>
+              <div class="step"><div class="n">4</div><div class="t">(หรือใส่เบอร์โทร + รหัส SMS เหมือนมือถือ)</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:center">
+          <div class="figure phone">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/34c7c88e853b.jpg" alt="Telegram chat list on phone">
+            </div>
+            <figcaption>หน้าจอหลักของ Telegram บนมือถือ — รายการแชท</figcaption>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight" style="margin-top:auto">
+        <div class="ic">💡</div>
+        <div class="tx">แนะนำให้<b>ล็อกอิน PC ด้วย QR Code</b> — สะดวกกว่า ไม่ต้องรอ SMS ซ้ำ</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">07 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 8: CREATE TELEGRAM BOT ============== -->
+<section class="slide" data-slide="8">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 1 · Step 2 · สร้าง Bot</div>
+        <div class="h-th">วิธีสร้าง Telegram Bot ตัวแรกของคุณ</div>
+        <div class="h-en">Create your first Telegram Bot via BotFather</div>
+      </div>
+      <div class="pill cyan">⏱ 8 นาที</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div>
+          <div class="steps">
+            <div class="step"><div class="n">1</div><div class="t">ใน Telegram แตะ<b>แว่นขยาย</b> → พิมพ์ <b>BotFather</b> → เลือกบัญชีที่มีเครื่องหมาย <span class="em">✓ ฟ้า</span></div></div>
+            <div class="step"><div class="n">2</div><div class="t">แตะ <b>Start</b> → BotFather จะตอบกลับเป็นภาษาอังกฤษ</div></div>
+            <div class="step"><div class="n">3</div><div class="t">พิมพ์ <span class="em">/newbot</span> → ตั้งชื่อ Bot (เช่น <b>"My Workshop Agent"</b>)</div></div>
+            <div class="step"><div class="n">4</div><div class="t">ตั้ง <b>username</b> ต้องลงท้ายด้วย <span class="em">bot</span> (เช่น <b>my_workshop_agent_bot</b>)</div></div>
+            <div class="step"><div class="n">5</div><div class="t">BotFather ส่ง <b>API Token</b> กลับมา — สายยาว ๆ เช่น <span class="em">1234567890:ABCdef...</span></div></div>
+            <div class="step warn"><div class="n">!</div><div class="t"><b>⚠️ เก็บ Token ไว้ในที่ปลอดภัย</b> — ห้ามส่งให้ใคร เหมือนรหัสผ่านกระเป๋าเงิน</div></div>
+            <div class="step"><div class="n">7</div><div class="t">เปิด Bot ใหม่ของคุณ → แตะ <b>Start</b> → พิมพ์ข้อความทดสอบ</div></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+          <div class="figure phone">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/873e19135c0d.jpeg" alt="BotFather chat screenshot">
+            </div>
+            <figcaption>หน้าจอสนทนากับ BotFather เพื่อสร้าง Bot ใหม่</figcaption>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">08 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 9: CHAT WITH AGENT ============== -->
+<section class="slide" data-slide="9">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 1 · Step 3 · แชทกับ Agent</div>
+        <div class="h-th">แชทกับ Agent ผ่าน Telegram Bot</div>
+        <div class="h-en">Talk to your Agent (e.g. thClaws)</div>
+      </div>
+      <div class="pill cyan">⏱ 7 นาที</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card">
+            <div class="eyebrow" style="margin-bottom:8px">แนวคิด</div>
+            <p style="font-size:13.5px;line-height:1.6">Agent (เช่น <b style="color:#bfdbfe">thClaws</b>) คือ <b style="color:var(--text)">"สมอง"</b> ที่รับคำสั่งจาก Telegram</p>
+            <ul class="tight" style="margin-top:10px">
+              <li>เราตั้งค่า Bot ให้<b>ส่งต่อข้อความ</b>ไปหา Agent อัตโนมัติ</li>
+              <li>Agent ประมวลผลเสร็จ → <b>ส่งคำตอบกลับ</b>มาที่ Telegram</li>
+              <li>เหมือน<b>จ้างเลขา</b>ที่รับโทรศัพท์แทนคุณ</li>
+            </ul>
+          </div>
+
+          <div class="figure phone">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/489e4ee9d1cd.jpg" alt="Telegram profile/settings">
+            </div>
+            <figcaption>ตั้งค่า Bot ใน Telegram เพื่อเชื่อมกับ Agent</figcaption>
+          </div>
+        </div>
+
+        <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(139,92,246,.04))">
+          <div class="eyebrow" style="margin-bottom:10px">ตัวอย่างการแชทจริง</div>
+          <div class="chat">
+            <div class="bubble me">
+              <div class="who">คุณ</div>
+              สรุปยอดขายไตรมาส 3 ให้หน่อย
+            </div>
+            <div class="bubble agent">
+              <div class="who">Agent</div>
+              ยอดขายไตรมาส 3 = <b>฿2.4M</b> (+18% จากไตรมาส 2)<br>สินค้าขายดี = <b>Product A</b>
+            </div>
+            <div class="bubble me">
+              <div class="who">คุณ</div>
+              ทำกราฟเทียบ 3 ไตรมาสให้หน่อย
+            </div>
+            <div class="bubble agent">
+              <div class="who">Agent</div>
+              📊 [ส่งภาพกราฟแท่งกลับมา]
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">09 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 10: CHAT TO DATA — CONCEPT ============== -->
+<section class="slide" data-slide="10">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 1 · Chat to Data · 00:10–00:35</div>
+        <div class="h-th">Chat to Data · ถาม-ตอบข้อมูลไฟล์ผ่านแชท</div>
+        <div class="h-en">Ask questions about your data files — in plain Thai</div>
+      </div>
+      <div class="pill violet">25 MIN</div>
+    </div>
+
+    <div class="content">
+      <div class="grid grid-3" style="gap:18px">
+        <div class="card">
+          <div class="ico">📊</div>
+          <h4>อ่านไฟล์ใหญ่โดยไม่ต้องเปิด Excel</h4>
+          <p>Agent อ่านไฟล์ Excel/CSV ขนาดใหญ่ให้เอง — ไม่ต้องเปิดโปรแกรม ไม่ต้องรอ load</p>
+        </div>
+        <div class="card">
+          <div class="ico">💬</div>
+          <h4>ถามคำถามภาษาไทย</h4>
+          <p>พิมพ์คำถามธรรมดา → ได้คำตอบทันที — เหมือนคุยกับเพื่อนที่เก่ง Excel</p>
+        </div>
+        <div class="card">
+          <div class="ico">📈</div>
+          <h4>สร้างกราฟสรุปผลให้อัตโนมัติ</h4>
+          <p>Agent สร้างกราฟแท่ง/เส้น/วงกลม ส่งกลับมาเป็นภาพในแชท</p>
+        </div>
+      </div>
+
+      <div class="col-aside" style="margin-top:6px">
+        <div class="insight" style="flex-direction:column;align-items:flex-start;gap:8px">
+          <div style="display:flex;gap:12px;align-items:center">
+            <div class="ic">💡</div>
+            <div class="tx"><b>ไม่ต้องเขียนสูตร</b> — Agent แปลงคำถามเป็น action เอง</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+            <span class="pill cyan">พิมพ์คำถาม → ได้คำตอบ</span>
+            <span class="pill blue">ไม่ต้อง VLOOKUP</span>
+            <span class="pill violet">ไม่ต้อง Pivot Table</span>
+          </div>
+        </div>
+
+        <div class="figure wide">
+          <div class="frame">
+            <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/36b33dd9f98c.jpg" alt="AI workflow concept">
+          </div>
+          <figcaption>ภาพรวมการทำงานของ Agent กับไฟล์ข้อมูล</figcaption>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">10 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 11: CHAT TO DATA — HOW TO ============== -->
+<section class="slide" data-slide="11">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Hands-on · Chat to Data · ปฏิบัติจริง</div>
+        <div class="h-th">Hands-on: ส่งไฟล์ให้ Agent</div>
+        <div class="h-en">Send a CSV file to your Agent — no code</div>
+      </div>
+      <div class="pill green">✓ TRY IT</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div>
+          <div class="steps">
+            <div class="step"><div class="n">1</div><div class="t">เปิด Telegram → เข้าห้องแชทของ <b>Bot</b> ที่สร้างไว้</div></div>
+            <div class="step"><div class="n">2</div><div class="t">แตะปุ่ม <b>📎 (แนบไฟล์)</b> → เลือกไฟล์ <span class="em">sales_2025.csv</span></div></div>
+            <div class="step"><div class="n">3</div><div class="t">พิมพ์ข้อความ: <span class="em">"ยอดขายรวมเดือน ก.ค. เท่าไหร่ และสินค้าไหนขายดีสุด?"</span></div></div>
+            <div class="step"><div class="n">4</div><div class="t">รอ <b>10–30 วินาที</b> → Agent ตอบกลับด้วย<b>ตัวเลข + ชื่อสินค้า</b></div></div>
+            <div class="step"><div class="n">5</div><div class="t">ลองถามต่อ: <span class="em">"เทียบยอดไตรมาส 2 vs 3 ของสินค้าตัวนั้นเป็นกราฟ"</span></div></div>
+            <div class="step"><div class="n">6</div><div class="t">Agent ส่ง<b>ภาพกราฟแท่ง</b>กลับมาในแชท</div></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="card" style="background:linear-gradient(135deg,rgba(16,185,129,.06),rgba(6,182,212,.04));border-color:rgba(16,185,129,.25)">
+            <div class="eyebrow" style="color:var(--success);margin-bottom:8px">✅ Tips — ทำให้ดีขึ้น</div>
+            <ul class="tight">
+              <li>ใช้<b>คำถามเฉพาะเจาะจง</b> → คำตอบแม่นยำขึ้น</li>
+              <li>ระบุ<b>ช่วงเวลา + ชื่อสินค้า</b>ชัดเจน</li>
+            </ul>
+          </div>
+          <div class="card" style="background:linear-gradient(135deg,rgba(244,63,94,.06),rgba(245,158,11,.04));border-color:rgba(244,63,94,.25)">
+            <div class="eyebrow" style="color:var(--danger);margin-bottom:8px">⚠️ ระวัง — Privacy</div>
+            <ul class="tight">
+              <li>อย่าส่งไฟล์ที่มี<b>ข้อมูลส่วนบุคคล (PII)</b></li>
+              <li>เช่น <b>เลขบัตรประชาชน</b> · เบอร์โทร · ที่อยู่</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">11 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 12: CHAT TO ERP — CONCEPT ============== -->
+<section class="slide" data-slide="12">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 1 · Chat to ERP · 00:35–01:00</div>
+        <div class="h-th">Chat to ERP · สั่งงาน ERPNext ผ่านแชท</div>
+        <div class="h-en">Replace 10 clicks with 1 message</div>
+      </div>
+      <div class="pill violet">25 MIN</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card" style="border-color:rgba(244,63,94,.25);background:linear-gradient(135deg,rgba(244,63,94,.04),transparent)">
+            <div class="eyebrow" style="color:var(--danger);margin-bottom:8px">ปัญหาปัจจุบัน</div>
+            <ul class="tight">
+              <li>เปิด Web App <b>หลาย tab</b> · คลิกหลายขั้นตอน</li>
+              <li>ฝั่งขายต้อง<b>สลับ</b>ระหว่างโทรศัพท์ + คอมพิวเตอร์</li>
+              <li>เสียเวลาทำเอกสาร <b>15-20 นาทีต่อใบ</b></li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-color:rgba(16,185,129,.25);background:linear-gradient(135deg,rgba(16,185,129,.04),transparent)">
+            <div class="eyebrow" style="color:var(--success);margin-bottom:8px">ทางออก</div>
+            <ul class="tight">
+              <li>พิมพ์คำสั่งใน <b>Telegram</b> → Agent ไปสร้างเอกสารใน ERPNext ให้</li>
+              <li>ประหยัดเวลา <b style="color:#6ee7b7">70%</b> ต่อการทำงาน</li>
+              <li>ลดความผิดพลาดจากการพิมพ์ซ้ำ</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(139,92,246,.04))">
+            <div class="eyebrow" style="margin-bottom:10px">ตัวอย่างการแชทจริง</div>
+            <div class="chat">
+              <div class="bubble me">
+                <div class="who">คุณ</div>
+                สร้างใบสั่งขายให้ลูกค้า ACME — สินค้า Widget x10 ราคา 500
+              </div>
+              <div class="bubble agent">
+                <div class="who">Agent</div>
+                ✅ สร้าง <b>SO-2025-0451</b> สำเร็จ<br>ยอดรวม ฿5,000 + VAT 7% = <b>฿5,350</b>
+              </div>
+            </div>
+          </div>
+          <div class="figure wide">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/dcecbc09724a.png" alt="ERPNext dashboard">
+            </div>
+            <figcaption>ERPNext dashboard — เอกสารถูกสร้างในระบบจริง</figcaption>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">12 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 13: WHAT IS MCP ============== -->
+<section class="slide" data-slide="13">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Concept · MCP คืออะไร</div>
+        <div class="h-th">MCP คืออะไร · Model Context Protocol</div>
+        <div class="h-en">No jargon — just plug-and-play</div>
+      </div>
+      <div class="pill cyan">CONCEPT 02</div>
+    </div>
+
+    <div class="content">
+      <div class="hl" style="font-size:18px;line-height:1.5;text-align:center;padding:18px">
+        <b>MCP</b> = <b>"ปลั๊กอิน"</b> มาตรฐานที่ให้ Agent <b>เสียบเข้ากับระบบต่าง ๆ</b> ได้<br>
+        <span style="color:var(--text-2);font-size:14px">เปรียบเทียบ: เหมือน <b style="color:#67e8f9">USB-C</b> — ไม่ว่าจะเสียบอะไรก็ใช้พอร์ตเดียวกันได้</span>
+      </div>
+
+      <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(6,182,212,.04));flex:1">
+        <div class="eyebrow" style="margin-bottom:14px">3 ส่วนของระบบ MCP</div>
+        <div class="diag" style="margin-top:0">
+          <div class="row" style="gap:24px">
+            <div class="box blue" style="min-width:200px;padding:18px">
+              <div style="font-size:36px;margin-bottom:6px">🧠</div>
+              <b>Agent</b>
+              <span class="sub">สมอง — ตัวตัดสินใจ<br>เข้าใจคำสั่ง + วางแผน</span>
+            </div>
+            <span class="arrow">⇄</span>
+            <div class="box violet" style="min-width:200px;padding:18px">
+              <div style="font-size:36px;margin-bottom:6px">📡</div>
+              <b>Channel</b>
+              <span class="sub">ทางสื่อสาร<br>ระหว่าง Agent ↔ ปลั๊กอิน</span>
+            </div>
+            <span class="arrow">⇄</span>
+            <div class="box cyan" style="min-width:200px;padding:18px">
+              <div style="font-size:36px;margin-bottom:6px">🔌</div>
+              <b>MCP Server</b>
+              <span class="sub">ปลั๊กอิน — เชื่อมไปยัง<br>ERP · ไฟล์ · API · ฯลฯ</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <span class="pill blue">🏢 ERPNext</span>
+          <span class="pill violet">📊 CSV / Excel</span>
+          <span class="pill cyan">🔗 REST API</span>
+          <span class="pill green">💾 Database</span>
+          <span class="pill blue">📧 Email</span>
+          <span class="pill violet">📅 Calendar</span>
+          <span class="pill cyan">🛒 Marketplace</span>
+        </div>
+      </div>
+
+      <div class="insight">
+        <div class="ic">💡</div>
+        <div class="tx">เพิ่มเครื่องมือใหม่ให้ Agent = เสียบปลั๊กอินใหม่ — <b>ไม่ต้องเขียนโค้ดใหม่</b> ทุกครั้ง</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">13 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 14: CHAT TO ERP — HOW TO ============== -->
+<section class="slide" data-slide="14">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Hands-on · Chat to ERP · ปฏิบัติจริง</div>
+        <div class="h-th">Hands-on: สั่งงาน ERPNext ผ่าน Telegram</div>
+        <div class="h-en">Order via chat — no code, just typing</div>
+      </div>
+      <div class="pill green">✓ TRY IT</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div>
+          <div class="steps">
+            <div class="step"><div class="n">1</div><div class="t">ขอ <b>URL + API Key</b> ของ ERPNext จากโค้ช</div></div>
+            <div class="step"><div class="n">2</div><div class="t">โค้ชเพิ่มคุณเข้ากลุ่ม <span class="em">"Workshop ERP Users"</span> → Agent จะรู้จักคุณ</div></div>
+            <div class="step"><div class="n">3</div><div class="t">ใน Telegram แชทกับ Bot → พิมพ์: <span class="em">"ดูสต็อกสินค้า Widget เหลือเท่าไหร่"</span></div></div>
+            <div class="step"><div class="n">4</div><div class="t">Agent ตอบ: <b>"เหลือ 250 ชิ้น (คลัง main)"</b></div></div>
+            <div class="step"><div class="n">5</div><div class="t">พิมพ์: <span class="em">"สร้างใบสั่งขายให้ลูกค้า ACME — Widget x10 ราคา 500"</span></div></div>
+            <div class="step"><div class="n">6</div><div class="t">Agent ถามยืนยัน: <span class="em">"ยืนยันสร้าง SO ยอม ฿5,350 ? (พิมพ์ 'ยืนยัน')"</span></div></div>
+            <div class="step"><div class="n">7</div><div class="t">พิมพ์ <b>"ยืนยัน"</b> → Agent ตอบ: ✅ สร้าง <b>SO-2025-0451</b> สำเร็จ</div></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(139,92,246,.04))">
+            <div class="eyebrow" style="margin-bottom:8px">🔒 Safety by Design</div>
+            <ul class="tight">
+              <li>Agent <b>ถามยืนยันทุกครั้ง</b>ก่อนสร้างเอกสาร</li>
+              <li>ทุกคำสั่งถูก<b>บันทึกไว้ใน log</b></li>
+              <li>ตรวจสอบย้อนหลังได้</li>
+            </ul>
+          </div>
+          <div class="insight">
+            <div class="ic">📋</div>
+            <div class="tx">ทุก transaction มี <b>reference ID</b> (เช่น SO-2025-0451) เก็บไว้ตรวจสอบ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">14 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 15: BREAK ============== -->
+<section class="slide" data-slide="15" style="background:linear-gradient(135deg,#0a0e1a 0%,#0e1426 100%)">
+  <div data-decor style="position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(245,158,11,.15),transparent 70%);filter:blur(20px)"></div>
+  <div data-decor style="position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(59,130,246,.1),transparent 70%);filter:blur(20px)"></div>
+  <div class="pad" style="align-items:center;justify-content:center;text-align:center">
+    <div style="font-size:140px;line-height:1;margin-bottom:20px">☕</div>
+    <div class="eyebrow" style="text-align:center">01:00 — 01:10 · Break Time</div>
+    <div class="h-th" style="font-size:48px;text-align:center;margin-top:8px">พักสายตา 10 นาที</div>
+    <div class="h-en" style="text-align:center;font-size:18px;margin-top:6px">Time to stretch, hydrate, breathe</div>
+
+    <div style="display:flex;gap:18px;margin-top:32px">
+      <div class="box" style="padding:16px 24px"><div style="font-size:24px">🚶</div><div style="font-size:13px;font-weight:600;margin-top:4px">ลุกจากเก้าอี้</div></div>
+      <div class="box" style="padding:16px 24px"><div style="font-size:24px">💧</div><div style="font-size:13px;font-weight:600;margin-top:4px">ดื่มน้ำ</div></div>
+      <div class="box" style="padding:16px 24px"><div style="font-size:24px">🧘</div><div style="font-size:13px;font-weight:600;margin-top:4px">ยืดเส้นยืดสาย</div></div>
+      <div class="box" style="padding:16px 24px"><div style="font-size:24px">👀</div><div style="font-size:13px;font-weight:600;margin-top:4px">มองไกล ๆ</div></div>
+    </div>
+
+    <div class="insight" style="margin-top:36px;max-width:600px">
+      <div class="ic">▶️</div>
+      <div class="tx">กลับมาเริ่มหัวข้อถัดไป: <b>"Agentic Wallet &amp; Protocols"</b> ใน 10 นาที</div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">15 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 16: WHY AGENT NEEDS A WALLET ============== -->
+<section class="slide" data-slide="16">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 2 · Agentic Wallet · 01:10–01:35</div>
+        <div class="h-th">ทำไม Agent ต้องมี Wallet?</div>
+        <div class="h-en">Why agents need wallets — 3 reasons</div>
+      </div>
+      <div class="pill violet">25 MIN</div>
+    </div>
+
+    <div class="content">
+      <div class="grid grid-3" style="gap:18px">
+        <div class="card glow">
+          <div class="ico" style="background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.3);font-size:24px">💸</div>
+          <h4>จ่ายค่า API ต่อครั้ง</h4>
+          <p>ไม่ต้องสมัครสมาชิก<b style="color:#fcd34d">เดือนละหมื่น</b> — จ่าย $0.001–$1 เฉพาะที่ใช้จริง</p>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">Pay-per-use · no subscription</div>
+        </div>
+        <div class="card glow">
+          <div class="ico" style="background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);font-size:24px">💰</div>
+          <h4>รับเงินจากการให้บริการ</h4>
+          <p>Agent ขาย <b style="color:#6ee7b7">data API</b> ของคุณเองได้ — รายได้ passively โดยไม่ต้องดูแล</p>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">Monetize your data</div>
+        </div>
+        <div class="card glow">
+          <div class="ico" style="background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.3);font-size:24px">🤖</div>
+          <h4>ทำธุรกรรม 24/7</h4>
+          <p>ไม่ต้อง<b style="color:#bfdbfe">กดอนุมัติทุกครั้ง</b> — Agent ทำงานต่อเนื่องแม้คุณนอน</p>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">Always-on automation</div>
+        </div>
+      </div>
+
+      <div class="col-aside" style="margin-top:6px">
+        <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(139,92,246,.04))">
+          <div class="eyebrow" style="margin-bottom:10px">มาตรฐานที่ใช้</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:12px;align-items:flex-start;padding:10px;background:rgba(255,255,255,.02);border-radius:8px;border:1px solid var(--border)">
+              <span class="pill blue" style="flex-shrink:0">x402</span>
+              <div style="font-size:13px;color:var(--text-2);line-height:1.5">จ่ายเงินผ่าน <b style="color:var(--text)">HTTP ธรรมดา</b> — จ่ายแลกข้อมูล</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;padding:10px;background:rgba(255,255,255,.02);border-radius:8px;border:1px solid var(--border)">
+              <span class="pill violet" style="flex-shrink:0">MPP</span>
+              <div style="font-size:13px;color:var(--text-2);line-height:1.5">protocol สำหรับ<b style="color:var(--text)">เครื่องจักรจ่ายหากัน</b> — สูงกว่า x402</div>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">
+              <span class="pill">Stripe</span><span class="pill">Visa</span><span class="pill">Amazon</span><span class="pill">Alchemy</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="figure" style="justify-content:center">
+          <div class="frame" style="padding:24px;background:rgba(59,130,246,.05)">
+            <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/e4b0a6cd42df.png" alt="USDC logo" style="height:120px;width:auto;display:block;margin:0 auto">
+          </div>
+          <figcaption>USDC — stablecoin ที่ Agent ใช้จ่าย</figcaption>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">16 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 17: WHAT IS TEMPO WALLET ============== -->
+<section class="slide" data-slide="17">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 2 · Tempo Wallet · แนวคิด</div>
+        <div class="h-th">Tempo Wallet คืออะไร?</div>
+        <div class="h-en">A digital wallet for USDC — built on Base L2</div>
+      </div>
+      <div class="pill cyan">WALLET</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="hl" style="font-size:16px;line-height:1.5">
+            <b>กระเป๋าเงินดิจิทัล</b> สำหรับเก็บเหรียญ <b style="color:#67e8f9">USDC</b>
+          </div>
+
+          <div class="card">
+            <div class="eyebrow" style="margin-bottom:10px">คุณสมบัติเด่น</div>
+            <ul class="tight">
+              <li>ใช้บนเครือข่าย <b>Base</b> (Ethereum Layer 2 — เร็วและถูก)</li>
+              <li>เหมาะกับ <b>micropayments</b> — จ่าย $0.001 ถึง $1 ได้สบาย</li>
+              <li><b>ฟรี</b> — สมัครได้เลยไม่ต้อง KYC สำหรับยอดเล็ก</li>
+              <li>URL: <span style="color:#67e8f9">wallet.tempo.xyz</span></li>
+            </ul>
+          </div>
+
+          <div class="insight">
+            <div class="ic">💡</div>
+            <div class="tx"><b>USDC</b> = stablecoin ที่ผูกกับค่าเงินดอลลาร์ — 1 USDC = $1 เสมอ ไม่ผันผวน</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+          <div class="figure phone">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/71aa23ab7e61.jpg" alt="USDC wallet on phone">
+            </div>
+            <figcaption>หน้า Tempo Wallet บนมือถือ — ยอด USDC + ประวัติ</figcaption>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">17 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 18: OPEN TEMPO WALLET ============== -->
+<section class="slide" data-slide="18">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 2 · Step 1 · เปิดใช้งาน</div>
+        <div class="h-th">เปิดใช้งาน Tempo Wallet</div>
+        <div class="h-en">Open your wallet — step by step</div>
+      </div>
+      <div class="pill cyan">⏱ 5 นาที</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div>
+          <div class="steps">
+            <div class="step"><div class="n">1</div><div class="t">เปิดเบราว์เซอร์ → ไปที่ <span class="em">https://wallet.tempo.xyz</span></div></div>
+            <div class="step"><div class="n">2</div><div class="t">คลิกปุ่ม <b>Continue</b> (มุมขวาบน)</div></div>
+            <div class="step"><div class="n">3</div><div class="t">เลือกวิธีสมัคร:<br>📧 <b>Email</b> — ใส่อีเมล + รหัสยืนยัน<br>🔗 <b>Google / GitHub / X</b> — ล็อกอินด้วยบัญชีที่มีอยู่</div></div>
+            <div class="step"><div class="n">4</div><div class="t">ตั้ง <b>PIN 6 หลัก</b> — ใช้ยืนยันทุกครั้งที่ทำธุรกรรม</div></div>
+            <div class="step"><div class="n">5</div><div class="t">ระบบสร้าง <b>wallet address</b> ให้อัตโนมัติ — เป็นรหัส <span class="em">0x...</span> ยาว 42 ตัวอักษร</div></div>
+            <div class="step"><div class="n">6</div><div class="t">เห็นหน้า <b>Dashboard</b> — แสดงยอด USDC = 0 (ยังไม่มีเงิน)</div></div>
+          </div>
+
+          <div class="step warn" style="margin-top:8px"><div class="n">!</div><div class="t"><b>⚠️ สำคัญ:</b> เก็บ PIN ไว้ในที่ปลอดภัย — หากลืม PIN + email → <b style="color:#fcd34d">เงินหายทั้งหมด</b></div></div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+          <div class="figure phone">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/71aa23ab7e61.jpg" alt="Tempo Wallet dashboard">
+            </div>
+            <figcaption>หน้า Dashboard ของ Tempo Wallet — ยอด USDC + ประวัติ</figcaption>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">18 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 19: COPY WALLET ADDRESS ============== -->
+<section class="slide" data-slide="19">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 2 · Step 2 · รับเงิน</div>
+        <div class="h-th">ก๊อป Wallet Address เพื่อรับ USDC</div>
+        <div class="h-en">Copy your address to receive USDC</div>
+      </div>
+      <div class="pill cyan">⏱ 4 นาที</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div>
+          <div class="steps">
+            <div class="step"><div class="n">1</div><div class="t">ใน Tempo Wallet หน้า Dashboard → มองหากล่องที่เขียนว่า <b>Wallet Address</b> หรือ <b>Receive</b></div></div>
+            <div class="step"><div class="n">2</div><div class="t">เห็นรหัสยาว ๆ เริ่มด้วย <span class="em">0x</span> เช่น <span class="em">0x0b2c69c5c1bbd3f8b...3f78</span></div></div>
+            <div class="step"><div class="n">3</div><div class="t">แตะปุ่ม <b>Copy</b> (ไอคอน 📋) — address ถูกคัดลอกไปยังคลิปบอร์ด</div></div>
+            <div class="step"><div class="n">4</div><div class="t">ส่ง address นี้ให้ผู้โอนผ่านช่องทางใดก็ได้:<br>📧 อีเมล · 💬 LINE / Telegram · 📱 QR Code (Tempo มีปุ่ม Generate QR)</div></div>
+            <div class="step"><div class="n">5</div><div class="t">รอผู้โอนส่ง USDC มา → ยอดจะขึ้นใน <b>1–5 วินาที</b></div></div>
+          </div>
+
+          <div class="step warn" style="margin-top:8px"><div class="n">!</div><div class="t"><b>⚠️ ข้อควรระวัง:</b> ส่งได้เฉพาะ address บนเครือข่าย <b style="color:#fcd34d">Base</b> เท่านั้น — ห้ามส่ง ETH/BTC มาที่ address นี้</div></div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+          <div class="figure phone">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/71aa23ab7e61.jpg" alt="Wallet address and balance">
+            </div>
+            <figcaption>หน้ารับเงิน — แสดง address + ยอด USDC</figcaption>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">19 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 20: SEND USDC ============== -->
+<section class="slide" data-slide="20">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 2 · Step 3 · โอนเงิน</div>
+        <div class="h-th">โอน USDC ให้คนอื่น</div>
+        <div class="h-en">Send USDC to anyone — in 7 steps</div>
+      </div>
+      <div class="pill cyan">⏱ 6 นาที</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div>
+          <div class="steps">
+            <div class="step"><div class="n">1</div><div class="t">ใน Tempo Wallet → แตะปุ่ม <b>Send</b> (ไอคอน ➤)</div></div>
+            <div class="step"><div class="n">2</div><div class="t">วาง <b>wallet address</b> ปลายทาง (Ctrl+V หรือแตะค้าง + Paste) — หรือสแกน QR code ของผู้รับ</div></div>
+            <div class="step"><div class="n">3</div><div class="t">ใส่จำนวน USDC: เช่น <span class="em">0.01</span> (≈ $0.01 หรือ 35 สตางค์) — ระบบแสดง <b>Network Fee</b> (gas) ≈ $0.001 บน Base</div></div>
+            <div class="step"><div class="n">4</div><div class="t">แตะ <b>Review</b> → ตรวจสอบ: ผู้รับ · จำนวน · Fee · รวม</div></div>
+            <div class="step"><div class="n">5</div><div class="t">ใส่ <b>PIN 6 หลัก</b> → แตะ <b>Confirm</b></div></div>
+            <div class="step"><div class="n">6</div><div class="t">รอ 3–5 วินาที → สถานะเปลี่ยนเป็น ✅ <b>Success</b></div></div>
+            <div class="step"><div class="n">7</div><div class="t">แตะ transaction → เห็น <b>Tx Hash</b> (รหัสอ้างอิง) สำหรับตรวจสอบ</div></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+          <div class="figure phone">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/71aa23ab7e61.jpg" alt="Send USDC screen">
+            </div>
+            <figcaption>หน้าส่งเงิน — กรอกจำนวน + ยืนยัน PIN</figcaption>
+          </div>
+
+          <div class="hl" style="font-size:11px;text-align:center;width:100%">
+            ตัวอย่าง: ส่ง <b>0.01 USDC</b> + Fee <b>0.001</b> = รวม <b style="color:#67e8f9">0.011 USDC</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">20 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 21: x402 PROTOCOL ============== -->
+<section class="slide" data-slide="21">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 2 · x402 Protocol</div>
+        <div class="h-th">x402 ทำงานยังไง?</div>
+        <div class="h-en">How x402 works — 5 simple steps</div>
+      </div>
+      <div class="pill violet">PROTOCOL</div>
+    </div>
+
+    <div class="content">
+      <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(139,92,246,.04))">
+        <div class="eyebrow" style="margin-bottom:14px">5 ขั้นตอนการทำงานของ x402</div>
+        <div class="diag" style="margin-top:0">
+          <div class="row" style="gap:14px">
+            <div class="box blue" style="min-width:130px;padding:14px 12px">
+              <div style="font-size:28px">🤖</div>
+              <b style="font-size:13px">1. ขอข้อมูล</b>
+              <span class="sub" style="font-size:11px">Agent เรียก API</span>
+            </div>
+            <span class="arrow">→</span>
+            <div class="box violet" style="min-width:130px;padding:14px 12px">
+              <div style="font-size:28px">⚠️</div>
+              <b style="font-size:13px">2. ตอบ 402</b>
+              <span class="sub" style="font-size:11px">"Payment Required"<br>+ ราคา + address</span>
+            </div>
+            <span class="arrow">→</span>
+            <div class="box cyan" style="min-width:130px;padding:14px 12px">
+              <div style="font-size:28px">💳</div>
+              <b style="font-size:13px">3. จ่าย USDC</b>
+              <span class="sub" style="font-size:11px">Agent จ่ายอัตโนมัติ<br>จาก wallet</span>
+            </div>
+            <span class="arrow">→</span>
+            <div class="box green" style="min-width:130px;padding:14px 12px">
+              <div style="font-size:28px">🔄</div>
+              <b style="font-size:13px">4. ส่งใหม่</b>
+              <span class="sub" style="font-size:11px">พร้อมหลักฐานการจ่าย</span>
+            </div>
+            <span class="arrow">→</span>
+            <div class="box blue" style="min-width:130px;padding:14px 12px">
+              <div style="font-size:28px">✅</div>
+              <b style="font-size:13px">5. ส่งข้อมูล</b>
+              <span class="sub" style="font-size:11px">+ ใบเสร็จ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.06));border-color:rgba(16,185,129,.3)">
+        <div class="ic">💡</div>
+        <div class="tx">ไม่ต้อง <b>API Key</b> · ไม่ต้อง<b>สมัครสมาชิก</b> · จ่ายต่อครั้งผ่าน <b>HTTP ธรรมดา</b></div>
+      </div>
+
+      <div class="col-aside" style="margin-top:auto">
+        <div class="card" style="background:linear-gradient(135deg,rgba(139,92,246,.06),rgba(59,130,246,.04))">
+          <div class="eyebrow" style="margin-bottom:8px">ทำไมต้อง x402?</div>
+          <ul class="tight">
+            <li>เปิดมาตรฐาน <b>HTTP 402</b> ที่ค้างอยู่ตั้งแต่ปี 1990s</li>
+            <li>เหมาะกับ <b>micropayments</b> ที่ credit card ทำไม่ได้</li>
+            <li>Agent ใช้ได้ทันที — ไม่ต้องสมัคร developer account</li>
+          </ul>
+        </div>
+
+        <div class="figure wide">
+          <div class="frame">
+            <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/05cfdffd1e50.png" alt="x402 transaction explorer">
+          </div>
+          <figcaption>x402 explorer — ตรวจสอบ transaction ได้ทุกตัว</figcaption>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">21 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 22: MPP DEEP DIVE ============== -->
+<section class="slide" data-slide="22">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 2 · MPP Deep-Dive</div>
+        <div class="h-th">MPP คืออะไรเพิ่มเติม</div>
+        <div class="h-en">Machine Payments Protocol — designed by Tempo</div>
+      </div>
+      <div class="pill violet">PROTOCOL</div>
+    </div>
+
+    <div class="content">
+      <div class="grid grid-2" style="gap:18px">
+        <div class="card">
+          <div class="eyebrow" style="margin-bottom:8px">เกี่ยวกับ MPP</div>
+          <ul class="tight">
+            <li>สร้างโดยทีม <b>Tempo</b> — ออกแบบให้ Agent จ่ายหากันโดยเฉพาะ</li>
+            <li>สูงกว่า x402 ระดับนึง — ครอบคลุม <b>identity · retries · settlement</b></li>
+            <li>SDK หลายภาษา: <b>TypeScript · Go · Ruby · Rust · Python</b></li>
+            <li>Partners: <b>Anthropic (Claude) · OpenAI · Parallel · fal.ai</b></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="eyebrow" style="margin-bottom:8px">ผู้สนับสนุนหลัก</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+            <span class="pill blue">Stripe</span>
+            <span class="pill violet">Visa</span>
+            <span class="pill cyan">Amazon</span>
+            <span class="pill green">Alchemy</span>
+            <span class="pill blue">Browserbase</span>
+            <span class="pill violet">Anthropic</span>
+            <span class="pill cyan">OpenAI</span>
+            <span class="pill green">Parallel</span>
+            <span class="pill blue">fal.ai</span>
+          </div>
+          <div style="margin-top:14px;font-size:12px;color:var(--text-muted);line-height:1.6">ทีมใหญ่ ๆ ในวงการ payments + AI ร่วมสนับสนุนมาตรฐานนี้ — สัญญาณว่าจะเป็นมาตรฐานจริง</div>
+        </div>
+      </div>
+
+      <div class="card" style="background:linear-gradient(135deg,rgba(6,182,212,.06),rgba(59,130,246,.04))">
+        <div class="eyebrow" style="margin-bottom:12px">📊 Live Stats จาก mppscan.com</div>
+        <div class="grid grid-4" style="gap:14px">
+          <div class="stat cyan">
+            <div class="lab">Total Transactions</div>
+            <div class="val">221.8<span class="unit">K</span></div>
+          </div>
+          <div class="stat">
+            <div class="lab">Total Volume</div>
+            <div class="val">$66.60<span class="unit">K</span></div>
+          </div>
+          <div class="stat green">
+            <div class="lab">Active Agents</div>
+            <div class="val">35.1<span class="unit">K</span></div>
+          </div>
+          <div class="stat">
+            <div class="lab">MPP Servers</div>
+            <div class="val">356<span class="unit">nodes</span></div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text-muted);text-align:right">Source: mppscan.com · ข้อมูล live ณ วันทำเวิร์กชอป</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">22 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 23: AUTONOMOUS SHOPPING CONCEPT ============== -->
+<section class="slide" data-slide="23">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 2 · Autonomous Shopping · 01:35–01:55</div>
+        <div class="h-th">Autonomous Shopping · ให้ Agent ซื้อของจริง</div>
+        <div class="h-en">Let your agent buy real services — pay per use</div>
+      </div>
+      <div class="pill violet">20 MIN</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="hl" style="font-size:15px;line-height:1.55">
+            <b>ลองนึกถึงการจ้างเด็กช่าง</b> — คุณบอกรายการ → เขาไปซื้อ → เอาของมาส่ง<br>
+            <span style="color:var(--text-2);font-size:13px">Poncho คือ marketplace สำหรับ Agent ทำแบบเดียวกัน แต่เร็วกว่ามาก</span>
+          </div>
+
+          <div class="card">
+            <div class="eyebrow" style="margin-bottom:8px">แพลตฟอร์ม: tryponcho.com</div>
+            <ul class="tight">
+              <li>มีบริการ <b style="color:#bfdbfe">3,000+</b> อย่างให้เลือก</li>
+              <li>ทุกบริการจ่ายต่อครั้งผ่าน <b>x402</b> — ไม่มี subscription</li>
+              <li>ตัวอย่างบริการ: หา lead · วิเคราะห์ data · สร้างภาพ · ค้นข้อมูล</li>
+            </ul>
+          </div>
+
+          <div class="card" style="background:linear-gradient(135deg,rgba(16,185,129,.06),rgba(6,182,212,.04));border-color:rgba(16,185,129,.25)">
+            <div class="eyebrow" style="color:var(--success);margin-bottom:8px">🔍 ตรวจสอบธุรกรรมได้ที่</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;gap:8px;align-items:center;padding:8px;background:rgba(255,255,255,.02);border-radius:6px;border:1px solid var(--border)">
+                <span class="pill blue">x402scan.com</span>
+                <span style="font-size:12px;color:var(--text-2)">explorer สำหรับ x402</span>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;padding:8px;background:rgba(255,255,255,.02);border-radius:6px;border:1px solid var(--border)">
+                <span class="pill violet">mppscan.com</span>
+                <span style="font-size:12px;color:var(--text-2)">explorer สำหรับ MPP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="figure wide">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/c331ce823f72.png" alt="Poncho marketplace UI">
+            </div>
+            <figcaption>หน้า marketplace ของ tryponcho.com — เลือกบริการได้ 3,000+</figcaption>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">23 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 24: HOW TO USE tryponcho ============== -->
+<section class="slide" data-slide="24">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 2 · Step 1 · ใช้งาน Poncho</div>
+        <div class="h-th">ใช้งาน tryponcho.com</div>
+        <div class="h-en">Use Poncho marketplace — login with wallet</div>
+      </div>
+      <div class="pill cyan">⏱ 8 นาที</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div>
+          <div class="steps">
+            <div class="step"><div class="n">1</div><div class="t">เปิดเบราว์เซอร์ → ไปที่ <span class="em">https://tryponcho.com</span></div></div>
+            <div class="step"><div class="n">2</div><div class="t">คลิก <b>Sign in</b> (มุมขวาบน) → เลือก <b>"Login with Tempo Wallet"</b></div></div>
+            <div class="step"><div class="n">3</div><div class="t">หน้าต่าง Tempo เปิดขึ้น → ใส่ <b>PIN</b> → อนุมัติการเชื่อมต่อ</div></div>
+            <div class="step"><div class="n">4</div><div class="t">กลับมาที่ Poncho → ไปที่แท็บ <b>Marketplace</b></div></div>
+            <div class="step"><div class="n">5</div><div class="t">เลือกหมวด เช่น <b>"GTM"</b> → คลิกบริการ <b>"Find Contacts"</b></div></div>
+            <div class="step"><div class="n">6</div><div class="t">กรอกข้อมูล: ICP = <span class="em">"CTO บริษัท SaaS 50-200 คน ใน Singapore"</span> · จำนวน leads = 10</div></div>
+            <div class="step"><div class="n">7</div><div class="t">ระบบแสดงราคา: <b style="color:#6ee7b7">$0.05 / lead × 10 = $0.50</b></div></div>
+            <div class="step"><div class="n">8</div><div class="t">คลิก <b>Run</b> → Agent ทำงาน 30 วินาที → ส่งผลกลับ</div></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="figure wide">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7804602a8cf0.png" alt="Poncho tools interface">
+            </div>
+            <figcaption>หน้าเลือกบริการใน Poncho Marketplace</figcaption>
+          </div>
+          <div class="insight">
+            <div class="ic">💡</div>
+            <div class="tx">เริ่มจาก<b>บริการเล็ก ๆ ก่อน</b> — ทดสอบด้วยยอด $0.50 ก่อนใช้จ่ายใหญ่</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">24 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 25: DEPOSIT TO PONCHO ============== -->
+<section class="slide" data-slide="25">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 2 · Step 2 · ฝากเงินเข้า Poncho · สำคัญ!</div>
+        <div class="h-th">ฝากเงินจาก Tempo เข้า Poncho</div>
+        <div class="h-en">Deposit via Settings → Advanced → Wallet</div>
+      </div>
+      <div class="pill" style="background:rgba(245,158,11,.15);color:#fcd34d;border-color:rgba(245,158,11,.35)">⚠ KEY STEP</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div>
+          <div class="steps">
+            <div class="step"><div class="n">1</div><div class="t">ใน tryponcho.com → คลิก<b>รูปโปรไฟล์</b> (มุมขวาบน) → เลือก <b>Settings</b></div></div>
+            <div class="step"><div class="n">2</div><div class="t">ในเมนูซ้าย → เลื่อนลงและเลือก <b>Advanced</b></div></div>
+            <div class="step"><div class="n">3</div><div class="t">มองหาส่วน <b>Wallet</b> หรือ <b>Deposit</b></div></div>
+            <div class="step"><div class="n">4</div><div class="t">เห็น address ของ Poncho account ของคุณ (รหัส <span class="em">0x...</span> ยาว 42 ตัวอักษร)</div></div>
+            <div class="step"><div class="n">5</div><div class="t">แตะ <b>Copy</b> → กลับไปที่ Tempo Wallet</div></div>
+            <div class="step"><div class="n">6</div><div class="t">ใน Tempo → แตะ <b>Send</b> → วาง address ของ Poncho</div></div>
+            <div class="step"><div class="n">7</div><div class="t">ใส่จำนวน USDC (เช่น <span class="em">5</span> USDC) → ใส่ PIN → ยืนยัน</div></div>
+            <div class="step"><div class="n">8</div><div class="t">รอ <b>5–10 วินาที</b> → กลับไปที่ tryponcho.com → รีเฟรช → ยอด <b>Balance</b> อัปเดต</div></div>
+          </div>
+
+          <div class="step warn" style="margin-top:8px"><div class="n">!</div><div class="t"><b>⚠️ ระวัง:</b> โอนได้เฉพาะ USDC บน <b style="color:#fcd34d">Base</b> เท่านั้น · ขั้นต่ำแนะนำ 1 USDC · โอนผิด chain → ติดต่อ support ทันที</div></div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="figure wide">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bf164515d76b.png" alt="Poncho balance / deposit view">
+            </div>
+            <figcaption>มุมมองยอด Balance ใน Poncho — เห็นหลังรีเฟรช</figcaption>
+          </div>
+          <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(6,182,212,.04));padding:12px">
+            <div style="font-size:12px;color:var(--cyan);font-weight:700;margin-bottom:4px">📍 PATH ที่ใช้บ่อย</div>
+            <div style="font-size:13px;color:var(--text);font-family:monospace">Profile → Settings → Advanced → Wallet</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">25 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 26: VERIFY ON TEMPO EXPLORER ============== -->
+<section class="slide" data-slide="26">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 2 · ตรวจสอบธุรกรรม</div>
+        <div class="h-th">ตรวจสอบธุรกรรมบน Tempo Explorer</div>
+        <div class="h-en">Verify transactions on explore.tempo.xyz</div>
+      </div>
+      <div class="pill cyan">VERIFY</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div>
+          <div class="card glow">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <div class="eyebrow" style="margin:0">explore.tempo.xyz</div>
+              <span class="pill blue">TEMPO EXPLORER</span>
+            </div>
+            <div class="steps">
+              <div class="step"><div class="n">1</div><div class="t">เปิด <span class="em">https://explore.tempo.xyz</span></div></div>
+              <div class="step"><div class="n">2</div><div class="t">วาง <b>wallet address</b> ของคุณในช่องค้นหา (เริ่มด้วย 0x...)</div></div>
+              <div class="step"><div class="n">3</div><div class="t">เห็นรายการ <b>transaction</b> ทั้งหมด: รับ/โอน USDC · จ่ายค่า API · ซื้อบริการ</div></div>
+              <div class="step"><div class="n">4</div><div class="t">ดูรายละเอียด: <b>วันเวลา · จำนวน · gas fee · สถานะ</b></div></div>
+              <div class="step"><div class="n">5</div><div class="t">คลิก <b>Tx Hash</b> → เห็นหลักฐานการจ่ายบน blockchain</div></div>
+            </div>
+          </div>
+
+          <div class="insight" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.06));border-color:rgba(16,185,129,.3)">
+            <div class="ic">🔍</div>
+            <div class="tx">ความ<b style="color:#6ee7b7">โปร่งใส</b>คือหัวใจของ autonomous economy — ทุก transaction ตรวจสอบได้สาธารณะบน Base blockchain</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="figure wide">
+            <div class="frame">
+              <img src="./Screenshot 2569-08-20 at 13.02.03.png" alt="Tempo Explorer UI">
+            </div>
+            <figcaption>หน้า Tempo Explorer — แสดงรายการ transaction ทั้งหมดของคุณ</figcaption>
+          </div>
+
+          <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(139,92,246,.04));padding:12px">
+            <div style="font-size:12px;color:var(--cyan);font-weight:700;margin-bottom:4px">📍 TEMPO EXPLORER</div>
+            <div style="font-size:13px;color:var(--text);font-family:monospace">explore.tempo.xyz</div>
+            <div style="font-size:11px;color:var(--text-2);margin-top:4px">ตรวจสอบ USDC transactions บน Base L2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">26 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 27: TIPS & SAFETY ============== -->
+<section class="slide" data-slide="27">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Session 2 · Tips &amp; Safety</div>
+        <div class="h-th">เคล็ดลับ &amp; ข้อควรระวัง</div>
+        <div class="h-en">Best practices for autonomous shopping</div>
+      </div>
+      <div class="pill" style="background:rgba(245,158,11,.15);color:#fcd34d;border-color:rgba(245,158,11,.35)">⚠ SAFETY</div>
+    </div>
+
+    <div class="content">
+      <div class="grid grid-3" style="gap:18px">
+        <div class="card" style="border-color:rgba(16,185,129,.25)">
+          <div class="eyebrow" style="color:var(--success);margin-bottom:10px">✅ DO — ควรทำ</div>
+          <ul class="safe-list do">
+            <li>ตั้ง <b>spending cap</b> รายวันใน wallet (เช่น $5/day)</li>
+            <li>ตรวจสอบ transaction บน <b>explorer</b> ทุกครั้ง</li>
+            <li>ใช้ <b>ICP</b> เฉพาะเจาะจง (industry + size + location + role)</li>
+            <li>แยก wallet สำรองสำหรับการทดลอง</li>
+          </ul>
+        </div>
+
+        <div class="card" style="border-color:rgba(245,158,11,.25)">
+          <div class="eyebrow" style="color:var(--warning);margin-bottom:10px">⚠️ WATCH — ระวัง</div>
+          <ul class="safe-list watch">
+            <li>อ่าน <b>refund policy</b> ของ service ใหม่ก่อนใช้</li>
+            <li>ราคา per-call อาจ<b>สะสมเป็นยอดใหญ่</b> — ดู weekly summary</li>
+            <li>บริการใหม่ ๆ อาจยังไม่ stable — เริ่มจากยอดเล็ก</li>
+            <li>เก็บ PIN + backup phrase ในที่ปลอดภัย</li>
+          </ul>
+        </div>
+
+        <div class="card" style="border-color:rgba(244,63,94,.25)">
+          <div class="eyebrow" style="color:var(--danger);margin-bottom:10px">❌ AVOID — ห้ามทำ</div>
+          <ul class="safe-list avoid">
+            <li>ใช้ wallet หลักจ่ายรายวัน — แยก wallet สำรองไว้</li>
+            <li>เผย <b>PIN / wallet address</b> ในที่สาธารณะ</li>
+            <li>โอนเงินกลางคันโดยไม่<b>ตรวจ address ปลายทาง</b></li>
+            <li>โอนเหรียญอื่น (ETH/BTC) มาที่ address USDC</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="insight" style="margin-top:auto">
+        <div class="ic">🛡️</div>
+        <div class="tx">กฎทอง: <b>ลองก่อนใช้จริง</b> — เริ่มจากยอด $1 → ทดสอบ flow → ค่อยเพิ่มเมื่อมั่นใจ</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">27 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 28: ARCHITECTURE RECAP ============== -->
+<section class="slide" data-slide="28">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Architecture Recap · ภาพรวมระบบ</div>
+        <div class="h-th">ภาพรวมระบบ End-to-End</div>
+        <div class="h-en">Plain language — 3 layers, no jargon</div>
+      </div>
+      <div class="pill cyan">RECAP</div>
+    </div>
+
+    <div class="content">
+      <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(139,92,246,.04))">
+        <div class="diag" style="margin-top:0">
+          <div class="box" style="min-width:340px;padding:14px 24px;background:linear-gradient(135deg,rgba(59,130,246,.18),rgba(59,130,246,.08));border-color:rgba(59,130,246,.5)">
+            <b>👤 คุณพิมพ์ใน Telegram</b>
+            <span class="sub">"สรุปยอดขาย + สั่ง Widget x10 + ซื้อ lead 10 ราย"</span>
+          </div>
+          <div class="arrow-down">↓</div>
+          <div class="box violet" style="min-width:340px;padding:14px 24px">
+            <b>🤖 Agent รับคำสั่ง — คิด + ตัดสินใจ</b>
+            <span class="sub">วางแผน แบ่งงาน แล้วเรียกเครื่องมือที่เกี่ยวข้อง</span>
+          </div>
+          <div class="arrow-down">↓</div>
+          <div class="row" style="gap:18px">
+            <div class="box blue" style="min-width:200px;padding:12px">📖 อ่านไฟล์ CSV<span class="sub">via MCP</span></div>
+            <div class="box cyan" style="min-width:200px;padding:12px">🏢 สั่ง ERPNext<span class="sub">via MCP</span></div>
+            <div class="box green" style="min-width:200px;padding:12px">💸 จ่าย USDC<span class="sub">via Tempo</span></div>
+          </div>
+          <div class="arrow-down">↓</div>
+          <div class="box green" style="min-width:340px;padding:14px 24px">
+            <b>🛒 ซื้อบริการบน tryponcho.com</b>
+            <span class="sub">ผ่าน x402 / MPP — pay per use</span>
+          </div>
+          <div class="arrow-down">↓</div>
+          <div class="box" style="min-width:340px;padding:14px 24px;background:linear-gradient(135deg,rgba(6,182,212,.18),rgba(6,182,212,.08));border-color:rgba(6,182,212,.5)">
+            <b>🔍 ตรวจสอบบน x402scan / mppscan</b>
+            <span class="sub">โปร่งใส · ตรวจสอบได้ทุก transaction</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-3" style="gap:14px;margin-top:auto">
+        <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),transparent)">
+          <div class="eyebrow" style="margin-bottom:6px">1. ชั้นคุย</div>
+          <p><b>Telegram</b> — ภาษาธรรมชาติที่มนุษย์ใช้คุยกับ Agent</p>
+        </div>
+        <div class="card" style="background:linear-gradient(135deg,rgba(139,92,246,.06),transparent)">
+          <div class="eyebrow" style="margin-bottom:6px">2. ชั้นทำงาน</div>
+          <p><b>Agent + เครื่องมือ</b> — ไฟล์ · ERP · API · MCP servers</p>
+        </div>
+        <div class="card" style="background:linear-gradient(135deg,rgba(6,182,212,.06),transparent)">
+          <div class="eyebrow" style="margin-bottom:6px">3. ชั้นเงิน</div>
+          <p><b>Payment protocol + marketplace</b> — x402 / MPP / Tempo / Poncho</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">28 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 29: USE CASES ============== -->
+<section class="slide" data-slide="29">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Real-World Use Cases</div>
+        <div class="h-th">Use Case ในชีวิตจริง</div>
+        <div class="h-en">4 applications beyond the workshop</div>
+      </div>
+      <div class="pill violet">USE CASES</div>
+    </div>
+
+    <div class="content">
+      <div class="grid grid-2" style="gap:18px;flex:1">
+        <div class="card glow">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div class="ico" style="margin:0;width:36px;height:36px;font-size:18px">🎯</div>
+            <h4 style="margin:0">ฝ่ายขาย · Sales</h4>
+            <span class="pill green" style="margin-left:auto">$0.05/lead</span>
+          </div>
+          <p>Agent ดู <b>lead ใหม่</b> → ค้นหาอีเมล → ส่ง<b>การ์ดอัตโนมัติ</b> — ประหยัดเวลา sales rep 80%</p>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+            <span class="pill">GTM</span><span class="pill">Find Contacts</span><span class="pill">Email Outreach</span>
+          </div>
+        </div>
+
+        <div class="card glow">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div class="ico" style="margin:0;width:36px;height:36px;font-size:18px">🛒</div>
+            <h4 style="margin:0">ฝ่ายจัดซื้อ · Procurement</h4>
+            <span class="pill green" style="margin-left:auto">auto-pay</span>
+          </div>
+          <p>Agent <b>เทียบราคา supplier 3 ราย</b> → สั่งของที่ถูกสุด → จ่าย <b>USDC</b> อัตโนมัติ</p>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+            <span class="pill">Price Compare</span><span class="pill">Auto-Order</span><span class="pill">USDC Pay</span>
+          </div>
+        </div>
+
+        <div class="card glow">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div class="ico" style="margin:0;width:36px;height:36px;font-size:18px">📊</div>
+            <h4 style="margin:0">Data Analytics</h4>
+            <span class="pill green" style="margin-left:auto">daily auto</span>
+          </div>
+          <p>Agent ดึงข้อมูล <b>10 API ทุกเช้า</b> → สร้าง <b>report</b> ส่ง email — ไม่ต้องทำเองอีกเลย</p>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+            <span class="pill">ETL</span><span class="pill">Auto Report</span><span class="pill">Email Delivery</span>
+          </div>
+        </div>
+
+        <div class="card glow">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div class="ico" style="margin:0;width:36px;height:36px;font-size:18px">💬</div>
+            <h4 style="margin:0">ลูกค้าสัมพันธ์ · CRM</h4>
+            <span class="pill green" style="margin-left:auto">24/7</span>
+          </div>
+          <p>Agent <b>ตอบคำถาม</b> + <b>คืนเงินอัตโนมัติ</b> ผ่าน wallet — ลูกค้าได้รับการตอบกลับทันที</p>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+            <span class="pill">Auto-Reply</span><span class="pill">Refund</span><span class="pill">Smart Routing</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-aside" style="margin-top:auto">
+        <div class="insight">
+          <div class="ic">💡</div>
+          <div class="tx">ทุก use case ใช้<b>สิ่งที่คุณเรียนวันนี้</b>เป็นฐาน — Telegram + Agent + Wallet + Marketplace</div>
+        </div>
+        <div class="figure wide">
+          <div class="frame">
+            <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/4c7111e964ab.jpg" alt="Team working with laptops">
+          </div>
+          <figcaption>ทีมที่ใช้ Agent + Autonomous Commerce ในการทำงานประจำวัน</figcaption>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">29 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 30: FUTURE ============== -->
+<section class="slide" data-slide="30">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Future · อนาคต</div>
+        <div class="h-th">อนาคตของ AI Autonomous Economy</div>
+        <div class="h-en">Where this is heading — predictions &amp; signals</div>
+      </div>
+      <div class="pill violet">FUTURE</div>
+    </div>
+
+    <div class="content">
+      <div class="grid grid-2" style="gap:18px">
+        <div class="card">
+          <div class="ico">🤝</div>
+          <h4>Agent-to-Agent Economy</h4>
+          <p>Agent <b style="color:#bfdbfe">ซื้อขายหากันเอง</b> — มนุษย์ set policy ไม่ใช่ approve ทีละรายการ</p>
+        </div>
+        <div class="card">
+          <div class="ico">💡</div>
+          <h4>Programmatic Money</h4>
+          <p>smart contract + AI = <b style="color:#bfdbfe">การเงินที่ตัดสินใจเอง</b> — เงินที่มี logic</p>
+        </div>
+        <div class="card">
+          <div class="ico">🌐</div>
+          <h4>มาตรฐานเปิด</h4>
+          <p>x402 / MPP จะเป็น <b style="color:#bfdbfe">"HTTP ของการจ่ายเงิน"</b> — ทุกคนใช้ได้ฟรี</p>
+        </div>
+        <div class="card">
+          <div class="ico">📈</div>
+          <h4>ปัจจุบัน · Live Stats</h4>
+          <p><b style="color:#6ee7b7">35.1K agents</b> · <b style="color:#6ee7b7">356 servers</b> · <b style="color:#6ee7b7">221.8K transactions</b> — ตลาดเริ่มต้นแล้ว!</p>
+        </div>
+      </div>
+
+      <div class="col-aside" style="margin-top:auto">
+        <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(139,92,246,.06));border-color:rgba(59,130,246,.4)">
+          <div class="eyebrow" style="margin-bottom:10px">🔮 Prediction</div>
+          <div style="font-size:18px;font-weight:700;color:var(--text);line-height:1.4">ใน <span style="color:#67e8f9">3 ปี</span> 50% ของ API calls จะผ่าน<br>micropayment protocol <span style="color:#94a3b8">— ไม่ใช่ subscription</span></div>
+        </div>
+        <div class="figure wide">
+          <div class="frame">
+            <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7b56160d66a9.png" alt="Futuristic AI workflow">
+          </div>
+          <figcaption>ภาพอนาคตของ Agent Economy — มาตรฐานเปิด + การเงินแบบ programmatic</figcaption>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">30 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 31: RECAP & RESOURCES ============== -->
+<section class="slide" data-slide="31">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Recap &amp; Resources · สรุป + แหล่งเรียนรู้</div>
+        <div class="h-th">สรุป + แหล่งเรียนรู้ต่อ</div>
+        <div class="h-en">What you did today + where to go next</div>
+      </div>
+      <div class="pill green">✓ DONE</div>
+    </div>
+
+    <div class="content">
+      <div class="grid grid-2" style="gap:18px">
+        <div class="card" style="background:linear-gradient(135deg,rgba(16,185,129,.06),rgba(6,182,212,.04));border-color:rgba(16,185,129,.25)">
+          <div class="eyebrow" style="color:var(--success);margin-bottom:10px">สิ่งที่ได้วันนี้</div>
+          <ul class="tight">
+            <li>✅ ติดตั้ง <b>Telegram</b> + สร้าง <b>Bot</b> เองได้</li>
+            <li>✅ แชทกับ Agent อ่าน<b>ไฟล์ CSV</b></li>
+            <li>✅ สั่งงาน <b>ERPNext</b> ผ่านแชท</li>
+            <li>✅ เปิด <b>Tempo Wallet</b> + รับ/โอน <b>USDC</b> ได้</li>
+            <li>✅ ฝากเงินเข้า <b>tryponcho.com</b> + ซื้อของจริง</li>
+            <li>✅ ตรวจสอบ transaction บน <b>x402scan / mppscan</b></li>
+          </ul>
+        </div>
+
+        <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(139,92,246,.04))">
+          <div class="eyebrow" style="margin-bottom:10px">📚 แหล่งเรียนรู้ต่อ</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:13.5px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.02);border-radius:6px;border:1px solid var(--border)">
+              <span>📖 <b>MPP docs</b></span><span style="color:#67e8f9;font-family:monospace;font-size:12px">mpp.dev</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.02);border-radius:6px;border:1px solid var(--border)">
+              <span>🔍 <b>x402 explorer</b></span><span style="color:#67e8f9;font-family:monospace;font-size:12px">x402scan.com</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.02);border-radius:6px;border:1px solid var(--border)">
+              <span>🔍 <b>MPP explorer</b></span><span style="color:#67e8f9;font-family:monospace;font-size:12px">mppscan.com</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.02);border-radius:6px;border:1px solid var(--border)">
+              <span>💼 <b>Tempo Wallet</b></span><span style="color:#67e8f9;font-family:monospace;font-size:12px">wallet.tempo.xyz</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.02);border-radius:6px;border:1px solid var(--border)">
+              <span>🔍 <b>Tempo Explorer</b></span><span style="color:#67e8f9;font-family:monospace;font-size:12px">explore.tempo.xyz</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.02);border-radius:6px;border:1px solid var(--border)">
+              <span>🛒 <b>Poncho marketplace</b></span><span style="color:#67e8f9;font-family:monospace;font-size:12px">tryponcho.com</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.02);border-radius:6px;border:1px solid var(--border)">
+              <span>📖 <b>MCP docs</b></span><span style="color:#67e8f9;font-family:monospace;font-size:12px">modelcontextprotocol.io</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight" style="margin-top:auto">
+        <div class="ic">🚀</div>
+        <div class="tx">ขั้นตอนถัดไป: <b>ลองซื้อบริการจริง 1 ครั้ง</b> ด้วยยอด $0.50 ภายในสัปดาห์นี้ — เพื่อยึดเหตุการณ์ไว้ในความทรงจำ</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">31 / 32</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 32: Q&A + CLOSING ============== -->
+<section class="slide cover" data-slide="32">
+  <div class="bg" data-decor style="background:url('https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7b56160d66a9.png') center/cover;opacity:.08"></div>
+  <div class="glow" data-decor></div>
+  <div class="glow2" data-decor></div>
+  <div class="inner" style="justify-content:center;align-items:center;text-align:center;padding:64px 80px">
+    <div class="badge" style="margin-bottom:24px"><span class="pulse"></span> WORKSHOP COMPLETE · 32 / 32</div>
+
+    <div style="font-size:160px;font-weight:900;line-height:1;letter-spacing:-.04em;background:linear-gradient(120deg,#67e8f9,#3b82f6,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent">Q&amp;A</div>
+
+    <div style="font-size:18px;color:var(--cyan);font-weight:600;letter-spacing:.18em;text-transform:uppercase;margin-top:14px">ถาม-ตอบ · Ask Anything</div>
+
+    <div class="hero-text" style="margin-top:36px;max-width:900px">
+      อย่ารอ — <span class="accent">เริ่มสร้าง Agent</span> ของคุณวันนี้ 🚀
+    </div>
+
+    <div style="font-size:15px;color:var(--text-2);margin-top:14px;max-width:720px">ความรู้ที่ได้วันนี้ = ฐานของการเป็นผู้นำในยุค Autonomous Commerce</div>
+
+    <div style="display:flex;gap:18px;margin-top:36px;align-items:center">
+      <div class="qr" data-decor></div>
+      <div style="text-align:left">
+        <div class="eyebrow" style="margin-bottom:8px">CONTACT · ติดต่อ</div>
+        <div style="font-size:14px;color:var(--text);line-height:1.7">
+          📧 <b>email:</b> workshop@agentic-commerce.dev<br>
+          💬 <b>LINE:</b> @agentic-workshop<br>
+          🎮 <b>Discord:</b> discord.gg/agentic-th<br>
+          🌐 <b>Web:</b> agentic-commerce.dev
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:36px;padding-top:20px;border-top:1px solid var(--border);display:flex;gap:32px;color:var(--text-muted);font-size:12px;letter-spacing:.08em">
+      <div><b style="color:var(--text-2)">HOST:</b> Agentic Workflow Team</div>
+      <div><b style="color:var(--text-2)">DATE:</b> 2025 · Bangkok</div>
+      <div><b style="color:var(--text-2)">VERSION:</b> 2.0 · No-Code Edition</div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Agentic Workflow · Autonomous Commerce</div>
+    <div class="counter">32 / 32</div>
+  </div>
+</section>
+
+</div>
+
+<!-- Navigation Controls -->
+<div class="nav-controls">
+  <button id="prev" title="Previous (←)">‹</button>
+  <div class="count"><span id="cur">1</span> / 32</div>
+  <button id="next" title="Next (→)">›</button>
+</div>
+
+<script>
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let cur = 0;
+  const counter = document.getElementById('cur');
+
+  function show(i){
+    cur = Math.max(0, Math.min(total-1, i));
+    slides.forEach((s, idx) => {
+      s.style.display = idx === cur ? 'block' : 'none';
+    });
+    counter.textContent = (cur + 1);
+    window.scrollTo({ top: slides[cur].getBoundingClientRect().top + window.scrollY - 32, behavior: 'smooth' });
+  }
+
+  document.getElementById('prev').addEventListener('click', () => show(cur - 1));
+  document.getElementById('next').addEventListener('click', () => show(cur + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      e.preventDefault();
+      show(cur + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      show(cur - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      show(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      show(total - 1);
+    }
+  });
+
+  // Initialize: show only first slide
+  show(0);
+})();
+</script>
+
+</body>
+</html>
