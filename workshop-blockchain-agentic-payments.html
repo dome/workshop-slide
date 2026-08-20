@@ -449,12 +449,273 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">01 / 18</div>
+    <div class="counter">01 / 22</div>
   </div>
 </section>
 
-<!-- ============== SLIDE 2: WHY AGENT NEEDS A WALLET ============== -->
+<!-- ============== SLIDE 2: TEMPO BLOCKCHAIN ARCHITECTURE ============== -->
 <section class="slide" data-slide="2">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Tempo Blockchain · สถาปัตยกรรม</div>
+        <div class="h-th">Tempo Blockchain คืออะไร?</div>
+        <div class="h-en">EVM-compatible blockchain built for agentic payments</div>
+      </div>
+      <div class="pill cyan">ARCHITECTURE</div>
+    </div>
+
+    <div class="content">
+      <div class="grid grid-3" style="gap:18px">
+        <div class="card glow">
+          <div class="ico" style="background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.3);font-size:24px">⚡</div>
+          <h4>Simplex BFT</h4>
+          <p>Consensus algorithm ที่ให้ <b style="color:#bfdbfe">deterministic sub-second finality</b> — ธุรกรรมยืนยันใน &lt;1 วินาที</p>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">เร็วกว่า Ethereum 100x · เหมาะกับ micropayments</div>
+        </div>
+        <div class="card glow">
+          <div class="ico" style="background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.3);font-size:24px">🔌</div>
+          <h4>EVM-Compatible</h4>
+          <p>รัน smart contract ที่เขียนด้วย <b style="color:#ddd6fe">Solidity</b> ได้เลย — ใช้เครื่องมือเดิมของ Ethereum ได้ทั้งหมด</p>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">MetaMask · Hardhat · ethers.js ใช้ได้ทันที</div>
+        </div>
+        <div class="card glow">
+          <div class="ico" style="background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);font-size:24px">💸</div>
+          <h4>Fee AMM</h4>
+          <p><b style="color:#67e8f9">ไม่มี native gas token</b> — จ่าย fee ด้วย stablecoin ใดก็ได้ (USDC, USDT, pathUSD)</p>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">ไม่ต้องถือ ETH สำหรับ gas · UX ง่ายสำหรับ non-crypto users</div>
+        </div>
+      </div>
+
+      <div class="col-aside" style="margin-top:6px">
+        <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(139,92,246,.04))">
+          <div class="eyebrow" style="margin-bottom:10px">จุดเด่นของ Tempo</div>
+          <div class="diag" style="margin-top:0">
+            <div class="row" style="gap:14px">
+              <div class="box blue" style="min-width:160px;padding:14px 12px">
+                <div style="font-size:28px">🚀</div>
+                <b style="font-size:13px">Parallel Execution</b>
+                <span class="sub" style="font-size:11px">Tempo Transactions<br>(EIP-2718 type)</span>
+              </div>
+              <span class="arrow">+</span>
+              <div class="box violet" style="min-width:160px;padding:14px 12px">
+                <div style="font-size:28px">📦</div>
+                <b style="font-size:13px">Batching</b>
+                <span class="sub" style="font-size:11px">รวมหลาย tx ใน<br>บล็อกเดียว</span>
+              </div>
+              <span class="arrow">+</span>
+              <div class="box cyan" style="min-width:160px;padding:14px 12px">
+                <div style="font-size:28px">🔐</div>
+                <b style="font-size:13px">WebAuthn</b>
+                <span class="sub" style="font-size:11px">ล็อกอินด้วย<br>Face ID / Touch ID</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.06));border-color:rgba(16,185,129,.3)">
+          <div class="ic">💡</div>
+          <div class="tx">Tempo ออกแบบมาเพื่อ <b style="color:#6ee7b7">agentic payments โดยเฉพาะ</b> — ไม่ใช่แค่ blockchain ทั่วไปที่พยายามรองรับ AI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
+    <div class="counter">02 / 22</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 3: SIMPLEX BFT & FINALITY ============== -->
+<section class="slide" data-slide="3">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Simplex BFT · ความเร็วระดับ sub-second</div>
+        <div class="h-th">ทำไม Tempo เร็วกว่า Ethereum 100x?</div>
+        <div class="h-en">Deterministic sub-second finality — built for micropayments</div>
+      </div>
+      <div class="pill violet">CONSENSUS</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card">
+            <div class="eyebrow" style="margin-bottom:10px">เปรียบเทียบ Finality Time</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+              <div style="text-align:center;padding:16px;background:rgba(244,63,94,.08);border-radius:8px;border:1px solid rgba(244,63,94,.3)">
+                <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px">Ethereum L1</div>
+                <div style="font-size:28px;font-weight:800;color:var(--danger)">~13 min</div>
+                <div style="font-size:11px;color:var(--text-2);margin-top:4px">Probabilistic</div>
+              </div>
+              <div style="text-align:center;padding:16px;background:rgba(245,158,11,.08);border-radius:8px;border:1px solid rgba(245,158,11,.3)">
+                <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px">Base L2</div>
+                <div style="font-size:28px;font-weight:800;color:var(--warning)">~2 sec</div>
+                <div style="font-size:11px;color:var(--text-2);margin-top:4px">Optimistic Rollup</div>
+              </div>
+              <div style="text-align:center;padding:16px;background:rgba(16,185,129,.08);border-radius:8px;border:1px solid rgba(16,185,129,.3)">
+                <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px">Tempo</div>
+                <div style="font-size:28px;font-weight:800;color:var(--success)">&lt;1 sec</div>
+                <div style="font-size:11px;color:var(--text-2);margin-top:4px">Deterministic BFT</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="eyebrow" style="margin-bottom:10px">Simplex BFT ทำงานยังไง?</div>
+            <ul class="tight">
+              <li><b>Byzantine Fault Tolerant</b> — ทนต่อ node ที่ล้มเหลวหรือ malicious ได้ 1/3</li>
+              <li><b>Deterministic finality</b> — เมื่อ tx ถูก confirm แล้ว <b style="color:#6ee7b7">ไม่สามารถย้อนกลับได้</b></li>
+              <li><b>No reorgs</b> — ไม่มี chain reorganization เหมือน PoW/PoS</li>
+              <li><b>Low latency</b> — ออกแบบมาสำหรับ real-time payments</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="insight" style="background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(244,63,94,.06));border-color:rgba(245,158,11,.3)">
+            <div class="ic">⚡</div>
+            <div class="tx">Agent จ่ายค่า API <b style="color:#fcd34d">$0.001</b> → ยืนยันใน <b style="color:#fcd34d">&lt;1 วินาที</b> → ได้ข้อมูลทันที — ไม่มีทางรอ 13 นาทีแบบ Ethereum L1</div>
+          </div>
+
+          <div class="figure wide">
+            <div class="frame">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7b56160d66a9.png" alt="Blockchain consensus comparison">
+            </div>
+            <figcaption>เปรียบเทียบ consensus mechanisms — Tempo ใช้ Simplex BFT เพื่อความเร็วสูงสุด</figcaption>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
+    <div class="counter">03 / 22</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 4: FEE AMM — NO GAS TOKEN ============== -->
+<section class="slide" data-slide="4">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Fee AMM · ไม่มี Native Gas Token</div>
+        <div class="h-th">จ่าย Gas Fee ด้วย Stablecoin — ไม่ต้องถือ ETH</div>
+        <div class="h-en">Fee AMM — pay gas in any supported USD stablecoin</div>
+      </div>
+      <div class="pill cyan">INNOVATION</div>
+    </div>
+
+    <div class="content">
+      <div class="col-aside">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card" style="border-color:rgba(244,63,94,.25);background:linear-gradient(135deg,rgba(244,63,94,.04),transparent)">
+            <div class="eyebrow" style="color:var(--danger);margin-bottom:8px">ปัญหาของ Ethereum / Base</div>
+            <ul class="tight">
+              <li>ต้องถือ <b>ETH</b> สำหรับ gas fee — แม้จะอยากจ่ายด้วย USDC</li>
+              <li>User ต้อง<b>ซื้อ ETH ก่อน</b> → ซับซ้อนสำหรับ non-crypto users</li>
+              <li>Agent ต้อง<b>จัดการ ETH balance</b> แยกจาก USDC — ยุ่งยาก</li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-color:rgba(16,185,129,.25);background:linear-gradient(135deg,rgba(16,185,129,.04),transparent)">
+            <div class="eyebrow" style="color:var(--success);margin-bottom:8px">ทางออกของ Tempo: Fee AMM</div>
+            <ul class="tight">
+              <li>จ่าย gas fee ด้วย <b style="color:#6ee7b7">USDC, USDT, pathUSD</b> — stablecoin ใดก็ได้</li>
+              <li><b style="color:#6ee7b7">ไม่ต้องถือ ETH</b> เลย — UX ง่ายเหมือนใช้แอปธนาคาร</li>
+              <li>Agent จัดการเงิน<b>สกุลเดียว</b> — ไม่ต้อง swap ETH/USDC</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(139,92,246,.04))">
+            <div class="eyebrow" style="margin-bottom:10px">ตัวอย่าง: Agent จ่ายค่า API</div>
+            <div class="chat">
+              <div class="bubble me">
+                <div class="who">Agent</div>
+                เรียก API → ได้ 402 Payment Required → จ่าย <b>$0.005 USDC</b>
+              </div>
+              <div class="bubble agent">
+                <div class="who">Tempo Fee AMM</div>
+                ✅ หัก <b>0.005 USDC</b> จาก wallet → จ่าย gas + ค่า API ใน tx เดียว → ได้ข้อมูลกลับ
+              </div>
+            </div>
+          </div>
+
+          <div class="insight">
+            <div class="ic">💡</div>
+            <div class="tx">Fee AMM = <b>Automated Market Maker สำหรับ gas fee</b> — convert stablecoin → gas อัตโนมัติ behind the scenes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
+    <div class="counter">04 / 22</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 5: TEMPO ZONES & PRIVACY ============== -->
+<section class="slide" data-slide="5">
+  <div class="pad">
+    <div class="eyebrow-row">
+      <div>
+        <div class="eyebrow">Tempo Zones · Privacy & Compliance</div>
+        <div class="h-th">Tempo Zones — Private Execution Environments</div>
+        <div class="h-en">ZK or TEE modes for confidential transactions</div>
+      </div>
+      <div class="pill violet">PRIVACY</div>
+    </div>
+
+    <div class="content">
+      <div class="grid grid-2" style="gap:18px">
+        <div class="card glow">
+          <div class="ico" style="background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.3);font-size:24px">🔐</div>
+          <h4>ZK Mode (Zero-Knowledge)</h4>
+          <p>พิสูจน์ว่าธุรกรรมถูกต้อง<b style="color:#ddd6fe">โดยไม่เปิดเผยข้อมูล</b> — เหมาะกับ sensitive payments</p>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">ตัวอย่าง: Agent จ่ายค่า data API โดยไม่เปิดเผยว่าซื้ออะไร</div>
+        </div>
+        <div class="card glow">
+          <div class="ico" style="background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);font-size:24px">🛡️</div>
+          <h4>TEE Mode (Trusted Execution)</h4>
+          <p>รัน smart contract ใน <b style="color:#67e8f9">secure enclave</b> — ข้อมูลถูกเข้ารหัสแม้ตอนประมวลผล</p>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">ตัวอย่าง: Agent ประมูลข้อมูลโดยคู่แข่งไม่เห็น bid</div>
+        </div>
+      </div>
+
+      <div class="col-aside" style="margin-top:6px">
+        <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(139,92,246,.04))">
+          <div class="eyebrow" style="margin-bottom:10px">TIP-20 & TIP-403 Standards</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--cyan);margin-bottom:6px">TIP-20</div>
+              <div style="font-size:13px;color:var(--text-2);line-height:1.5">Stablecoin standard พร้อม <b style="color:var(--text)">built-in compliance</b> และ memos — เหมาะกับ regulated payments</div>
+            </div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--cyan);margin-bottom:6px">TIP-403</div>
+              <div style="font-size:13px;color:var(--text-2);line-height:1.5">Access control ผ่าน <b style="color:var(--text)">whitelists / blacklists</b> — ควบคุมว่าใครใช้ service ได้บ้าง</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.06));border-color:rgba(16,185,129,.3)">
+          <div class="ic">🏢</div>
+          <div class="tx">Enterprise ใช้ Tempo Zones สำหรับ <b style="color:#6ee7b7">confidential agentic commerce</b> — Agent ซื้อข้อมูลโดยไม่เปิดเผย strategy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
+    <div class="counter">05 / 22</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 6: WHY AGENT NEEDS A WALLET ============== -->
+<section class="slide" data-slide="6">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -516,12 +777,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">02 / 18</div>
+    <div class="counter">06 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 3: WHAT IS TEMPO WALLET ============== -->
-<section class="slide" data-slide="3">
+<section class="slide" data-slide="7">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -568,12 +829,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">03 / 18</div>
+    <div class="counter">07 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 4: OPEN TEMPO WALLET ============== -->
-<section class="slide" data-slide="4">
+<section class="slide" data-slide="8">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -612,12 +873,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">04 / 18</div>
+    <div class="counter">08 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 5: COPY WALLET ADDRESS ============== -->
-<section class="slide" data-slide="5">
+<section class="slide" data-slide="9">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -655,12 +916,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">05 / 18</div>
+    <div class="counter">09 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 6: SEND USDC ============== -->
-<section class="slide" data-slide="6">
+<section class="slide" data-slide="10">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -702,12 +963,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">06 / 18</div>
+    <div class="counter">10 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 7: x402 PROTOCOL ============== -->
-<section class="slide" data-slide="7">
+<section class="slide" data-slide="11">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -782,12 +1043,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">07 / 18</div>
+    <div class="counter">11 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 8: MPP DEEP DIVE ============== -->
-<section class="slide" data-slide="8">
+<section class="slide" data-slide="12">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -853,12 +1114,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">08 / 18</div>
+    <div class="counter">12 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 9: AUTONOMOUS SHOPPING CONCEPT ============== -->
-<section class="slide" data-slide="9">
+<section class="slide" data-slide="13">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -914,12 +1175,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">09 / 18</div>
+    <div class="counter">13 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 10: HOW TO USE tryponcho ============== -->
-<section class="slide" data-slide="10">
+<section class="slide" data-slide="14">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -962,12 +1223,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">10 / 18</div>
+    <div class="counter">14 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 11: DEPOSIT TO PONCHO ============== -->
-<section class="slide" data-slide="11">
+<section class="slide" data-slide="15">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -1012,12 +1273,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">11 / 18</div>
+    <div class="counter">15 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 12: VERIFY ON TEMPO EXPLORER ============== -->
-<section class="slide" data-slide="12">
+<section class="slide" data-slide="16">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -1070,12 +1331,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">12 / 18</div>
+    <div class="counter">16 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 13: TIPS & SAFETY ============== -->
-<section class="slide" data-slide="13">
+<section class="slide" data-slide="17">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -1127,12 +1388,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">13 / 18</div>
+    <div class="counter">17 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 14: ARCHITECTURE RECAP ============== -->
-<section class="slide" data-slide="14">
+<section class="slide" data-slide="18">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -1192,12 +1453,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">14 / 18</div>
+    <div class="counter">18 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 15: USE CASES ============== -->
-<section class="slide" data-slide="15">
+<section class="slide" data-slide="19">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -1275,12 +1536,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">15 / 18</div>
+    <div class="counter">19 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 16: FUTURE ============== -->
-<section class="slide" data-slide="16">
+<section class="slide" data-slide="20">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -1331,12 +1592,12 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">16 / 18</div>
+    <div class="counter">20 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 17: RECAP & RESOURCES ============== -->
-<section class="slide" data-slide="17">
+<section class="slide" data-slide="21">
   <div class="pad">
     <div class="eyebrow-row">
       <div>
@@ -1394,17 +1655,17 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">17 / 18</div>
+    <div class="counter">21 / 22</div>
   </div>
 </section>
 
 <!-- ============== SLIDE 18: Q&A + CLOSING ============== -->
-<section class="slide cover" data-slide="18">
+<section class="slide cover" data-slide="22">
   <div class="bg" data-decor style="background:url('https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7b56160d66a9.png') center/cover;opacity:.08"></div>
   <div class="glow" data-decor></div>
   <div class="glow2" data-decor></div>
   <div class="inner" style="justify-content:center;align-items:center;text-align:center;padding:64px 80px">
-    <div class="badge" style="margin-bottom:24px"><span class="pulse"></span> TALK COMPLETE · 18 / 18</div>
+    <div class="badge" style="margin-bottom:24px"><span class="pulse"></span> TALK COMPLETE · 22 / 22</div>
 
     <div style="font-size:160px;font-weight:900;line-height:1;letter-spacing:-.04em;background:linear-gradient(120deg,#67e8f9,#3b82f6,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent">Q&amp;A</div>
 
@@ -1437,7 +1698,7 @@ ul.tight li b{color:var(--text)}
   </div>
   <div class="foot">
     <div class="brand"><span class="dot"></span> Blockchain Agentic Payments · The Payment Layer for AI Agents</div>
-    <div class="counter">18 / 18</div>
+    <div class="counter">22 / 22</div>
   </div>
 </section>
 
@@ -1452,7 +1713,7 @@ ul.tight li b{color:var(--text)}
 <!-- Navigation Controls -->
 <div class="nav-controls">
   <button id="prev" title="Previous (←)">‹</button>
-  <div class="count"><span id="cur">1</span> / 18</div>
+  <div class="count"><span id="cur">1</span> / 22</div>
   <button id="next" title="Next (→)">›</button>
   <button id="fullscreen" title="Fullscreen (F)" style="margin-left:8px">⛶</button>
 </div>
