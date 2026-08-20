@@ -398,6 +398,23 @@ ul.tight li b{color:var(--text)}
 /* Soft scrollable region (no scroll, but compact) */
 .compact{gap:10px}
 
+/* Debug mode — enables text selection */
+body.debug-mode .slide,
+body.debug-mode .slide *{
+  user-select:text !important;
+  -webkit-user-select:text !important;
+  cursor:text !important;
+}
+body.debug-mode::after{
+  content:" DEBUG — Text Selectable";
+  position:fixed;top:8px;left:50%;transform:translateX(-50%);
+  background:rgba(245,158,11,.9);color:#fff;
+  padding:4px 16px;border-radius:999px;
+  font-size:12px;font-weight:700;letter-spacing:.06em;
+  z-index:10001;pointer-events:none;
+  font-family:'Inter',sans-serif;
+}
+
 </style>
 </head>
 <body>
@@ -1861,7 +1878,8 @@ ul.tight li b{color:var(--text)}
   <button id="prev" title="Previous (←)">‹</button>
   <div class="count"><span id="cur">1</span> / 25</div>
   <button id="next" title="Next (→)">›</button>
-  <button id="fullscreen" title="Fullscreen (F)" style="margin-left:8px">⛶</button>
+  <button id="fullscreen" title="Fullscreen (F)" style="margin-left:8px"></button>
+  <button id="debug-toggle" title="Debug Mode — enable text selection (D)" style="margin-left:4px;font-size:14px">🐛</button>
 </div>
 
 <!-- Keyboard Shortcuts Help -->
@@ -1877,6 +1895,7 @@ ul.tight li b{color:var(--text)}
     <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">Home</kbd><span style="color:var(--text-2)">First slide</span>
     <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">End</kbd><span style="color:var(--text-2)">Last slide</span>
     <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">?</kbd><span style="color:var(--text-2)">Show this help</span>
+    <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">D</kbd><span style="color:var(--text-2)">Toggle debug mode (text selection)</span>
     <kbd style="background:var(--surface-2);padding:4px 10px;border-radius:6px;color:var(--cyan);font-family:monospace">Esc</kbd><span style="color:var(--text-2)">Close overview/help</span>
   </div>
   <div style="margin-top:20px;text-align:center;font-size:12px;color:var(--text-muted)">Press <kbd style="background:var(--surface-2);padding:2px 8px;border-radius:4px;color:var(--cyan);font-family:monospace">?</kbd> or click outside to close</div>
@@ -2013,10 +2032,16 @@ ul.tight li b{color:var(--text)}
     }
   }
 
+  // Debug mode toggle
+  function toggleDebug() {
+    document.body.classList.toggle('debug-mode');
+  }
+
   // Button listeners
   document.getElementById('prev').addEventListener('click', () => show(cur - 1));
   document.getElementById('next').addEventListener('click', () => show(cur + 1));
   document.getElementById('fullscreen').addEventListener('click', toggleFullscreen);
+  document.getElementById('debug-toggle').addEventListener('click', toggleDebug);
 
   // Keyboard shortcuts
   document.addEventListener('keydown', (e) => {
@@ -2068,6 +2093,11 @@ ul.tight li b{color:var(--text)}
       if (!e.ctrlKey && !e.metaKey) {
         e.preventDefault();
         resetTimer();
+      }
+    } else if (e.key === 'd' || e.key === 'D') {
+      if (!e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        toggleDebug();
       }
     } else if (e.key === '?') {
       e.preventDefault();
