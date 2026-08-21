@@ -2119,12 +2119,40 @@ body.debug-mode::after{
     }
   });
 
+  // Auto-detect video files and show/hide placeholders
+  function initVideos() {
+    const videos = [
+      { video: 'demo-video', placeholder: 'video-placeholder', src: './demo-tempo-blockchain.mp4' },
+      { video: 'demo-video-wallet', placeholder: 'video-placeholder-wallet', src: './demo-tempo-wallet.mp4' },
+      { video: 'demo-video-shopping', placeholder: 'video-placeholder-shopping', src: './demo-autonomous-shopping.mp4' }
+    ];
+
+    videos.forEach(function(v) {
+      var vidEl = document.getElementById(v.video);
+      var phEl = document.getElementById(v.placeholder);
+      if (!vidEl || !phEl) return;
+
+      var testVid = document.createElement('video');
+      testVid.preload = 'metadata';
+      testVid.src = v.src;
+      testVid.onloadedmetadata = function() {
+        vidEl.style.display = 'block';
+        phEl.style.display = 'none';
+      };
+      testVid.onerror = function() {
+        vidEl.style.display = 'none';
+        phEl.style.display = 'block';
+      };
+    });
+  }
+
   // Resize handler
   window.addEventListener('resize', scaleToFit);
 
   // Initialize
   scaleToFit();
   show(0);
+  initVideos();
 })();
 </script>
 
